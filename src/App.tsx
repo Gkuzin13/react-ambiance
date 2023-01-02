@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import AmbientCanvas from './components/AmbientCanvas';
+import AmbientCanvas from './components/CanvasContainer';
 import AmbientImage from './components/AmbientImage';
 import './App.css';
 import AmbientVideo from './components/AmbientVideo';
@@ -9,6 +9,7 @@ function App() {
     blur: 30,
     scale: 1,
     borderRadius: 20,
+    refreshRate: 150,
   });
 
   return (
@@ -17,6 +18,7 @@ function App() {
         borderRadius={settings.borderRadius}
         blur={settings.blur}
         scale={settings.scale}
+        refreshRate={settings.refreshRate}
       >
         <video
           muted
@@ -72,6 +74,20 @@ function App() {
             step={1}
             onChange={(e) =>
               setSettings({ ...settings, borderRadius: +e.target.value })
+            }
+          />
+        </div>
+        <div>
+          <label>Refresh Rate</label>
+          <br />
+          <input
+            type='range'
+            min={30}
+            max={200}
+            step={10}
+            defaultValue={150}
+            onChange={(e) =>
+              setSettings({ ...settings, refreshRate: +e.target.value })
             }
           />
         </div>

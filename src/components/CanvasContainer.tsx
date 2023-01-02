@@ -1,7 +1,7 @@
 import { forwardRef } from 'react';
 import type { PropsWithChildren } from 'react';
 
-const AmbientCanvas = forwardRef(
+const CanvasContainer = forwardRef(
   ({ children }: PropsWithChildren, ref: any) => {
     return (
       <div className='ambient-ontainer'>
@@ -12,4 +12,4 @@ const AmbientCanvas = forwardRef(
   }
 );
 
-export default AmbientCanvas;
+export default CanvasContainer;

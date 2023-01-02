@@ -5,3 +5,7 @@ export interface Props extends PropsWithChildren {
   borderRadius?: number;
   blur?: number;
 }
+
+export interface AmbientVideoProps extends Props {
+  refreshRate?: number;
+}

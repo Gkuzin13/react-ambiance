@@ -2,7 +2,7 @@ import { useLayoutEffect, useRef, useState } from 'react';
 import { drawCanvasFromMedia } from '../methods/canvas';
 import { getCssPropertyKey } from '../utils/string';
 import { traverseAndPassPropsByElementType } from '../methods/dom';
-import AmbientCanvas from './AmbientCanvas';
+import CanvasContainer from './CanvasContainer';
 import type { Props } from './types';
 
 function AmbientImage({
@@ -47,11 +47,11 @@ function AmbientImage({
   };
 
   return (
-    <AmbientCanvas ref={canvasRef}>
+    <CanvasContainer ref={canvasRef}>
       {traverseAndPassPropsByElementType(children, 'img', {
         ...imgElementProps,
       })}
-    </AmbientCanvas>
+    </CanvasContainer>
   );
 }
 

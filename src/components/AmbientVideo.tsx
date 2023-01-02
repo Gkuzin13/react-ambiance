@@ -3,15 +3,16 @@ import useInterval from '../hooks/useInterval';
 import { drawCanvasFromMedia } from '../methods/canvas';
 import { traverseAndPassPropsByElementType } from '../methods/dom';
 import { getCssPropertyKey } from '../utils/string';
-import AmbientCanvas from './AmbientCanvas';
-import type { Props } from './types';
+import CanvasContainer from './CanvasContainer';
+import type { AmbientVideoProps } from './types';
 
 function AmbientVideo({
   scale = 1.05,
   borderRadius = 8,
   blur = 30,
+  refreshRate = 150,
   children,
-}: Props) {
+}: AmbientVideoProps) {
   const [playing, setPlaying] = useState(false);
   const [mediaLoaded, setMediaLoaded] = useState(false);
 
@@ -38,7 +39,7 @@ function AmbientVideo({
         mediaRef.current?.getBoundingClientRect().width || 0,
         mediaRef.current?.getBoundingClientRect().height || 0
       ),
-    playing ? 75 : null
+    playing ? refreshRate : null
   );
 
   canvasRef.current?.style.setProperty(
@@ -63,11 +64,11 @@ function AmbientVideo({
   };
 
   return (
-    <AmbientCanvas ref={canvasRef}>
+    <CanvasContainer ref={canvasRef}>
       {traverseAndPassPropsByElementType(children, 'video', {
         ...videoElementProps,
       })}
-    </AmbientCanvas>
+    </CanvasContainer>
   );
 }
 
