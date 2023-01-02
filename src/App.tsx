@@ -1,17 +1,19 @@
 import { useState } from 'react';
-import AmbientCanvas from './AmbientCanvas';
+import AmbientCanvas from './components/AmbientCanvas';
+import AmbientImage from './components/AmbientImage';
 import './App.css';
+import AmbientVideo from './components/AmbientVideo';
 
 function App() {
   const [settings, setSettings] = useState({
     blur: 30,
-    scale: 1.05,
-    borderRadius: 8,
+    scale: 1,
+    borderRadius: 20,
   });
 
   return (
     <div className='App'>
-      <AmbientCanvas
+      <AmbientVideo
         borderRadius={settings.borderRadius}
         blur={settings.blur}
         scale={settings.scale}
@@ -22,8 +24,8 @@ function App() {
           height={200}
           src='http://commondatastorage.googleapis.com/gtv-videos-bucket/sample/BigBuckBunny.mp4'
         ></video>
-      </AmbientCanvas>
-      <AmbientCanvas
+      </AmbientVideo>
+      <AmbientImage
         borderRadius={settings.borderRadius}
         blur={settings.blur}
         scale={settings.scale}
@@ -31,7 +33,7 @@ function App() {
         <div>
           <img src='https://picsum.photos/200/300' alt='' />
         </div>
-      </AmbientCanvas>
+      </AmbientImage>
       <div style={{ color: 'white' }}>
         <div>
           <label>Scale</label>
@@ -41,6 +43,7 @@ function App() {
             min={1}
             max={1.1}
             step={0.01}
+            defaultValue={1}
             onChange={(e) =>
               setSettings({ ...settings, scale: +e.target.value })
             }
