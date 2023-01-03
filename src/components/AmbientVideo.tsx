@@ -3,7 +3,6 @@ import useAmbientConfig from '../hooks/useAmbientConfig';
 import useCanvas from '../hooks/useCanvas';
 import useInterval from '../hooks/useInterval';
 import CanvasContainer from './CanvasContainer';
-import { drawCanvasFromMedia } from '../methods/canvas';
 import { traverseAndPassPropsByElementType } from '../methods/dom';
 import type { AmbientVideoProps } from './types';
 
@@ -18,33 +17,32 @@ function AmbientVideo({
   const [playing, setPlaying] = useState(false);
 
   const canvasRef = useRef<HTMLCanvasElement>(null);
-  const originRef = useRef<HTMLImageElement | HTMLVideoElement>(null);
+  const sourceRef = useRef<HTMLImageElement | HTMLVideoElement>(null);
 
-  const { setMediaLoaded } = useCanvas({
-    originRef,
+  const { size, setSourceReady, drawCanvasImageFromSource } = useCanvas({
+    sourceRef,
     canvasRef,
-    watchOriginResize: true,
   });
 
   useAmbientConfig({ scale, blur, opacity, borderRadius, canvasRef });
 
   useInterval(
     () =>
-      drawCanvasFromMedia(
+      drawCanvasImageFromSource(
         canvasRef.current,
-        originRef.current,
-        originRef.current?.getBoundingClientRect().width || 0,
-        originRef.current?.getBoundingClientRect().height || 0
+        sourceRef.current,
+        size.width,
+        size.height,
       ),
-    playing ? refreshRate : null
+    playing ? refreshRate : null,
   );
 
   const videoElementProps = {
     onPlaying: () => {
-      setPlaying(true), setMediaLoaded(true);
+      setPlaying(true), setSourceReady(true);
     },
     onPause: () => setPlaying(false),
-    ref: originRef,
+    ref: sourceRef,
   };
 
   return (

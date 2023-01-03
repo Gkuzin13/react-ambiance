@@ -1,44 +1,78 @@
-import { RefObject, useLayoutEffect, useState } from 'react';
-import { drawCanvasFromMedia } from '../methods/canvas';
+import { RefObject, useCallback, useLayoutEffect, useState } from 'react';
 import useElementRect from './useElementRect';
 
 export type useCanvasArgs = {
-  originRef: RefObject<HTMLImageElement | HTMLVideoElement>;
+  sourceRef: RefObject<HTMLImageElement | HTMLVideoElement>;
   canvasRef: RefObject<HTMLCanvasElement>;
-  watchOriginResize?: boolean;
+  watchSourceResize?: boolean;
 };
 
-function useCanvas({ originRef, canvasRef, watchOriginResize }: useCanvasArgs) {
-  const [mediaLoaded, setMediaLoaded] = useState(false);
+function useCanvas({ sourceRef, canvasRef, watchSourceResize }: useCanvasArgs) {
+  const [sourceReady, setSourceReady] = useState(false);
 
-  const { rect, observe, stop } = useElementRect(originRef);
+  const drawCanvasImageFromSource = useCallback(
+    (
+      canvasElement: HTMLCanvasElement | null,
+      sourceElement: HTMLImageElement | HTMLVideoElement | null,
+      width: number,
+      height: number,
+    ) => {
+      if (!canvasElement || !sourceElement) return;
+
+      const ctx = canvasElement.getContext('2d');
+      ctx?.drawImage(sourceElement, 0, 0, width, height);
+    },
+    [],
+  );
+
+  const { rect, observe, stop } = useElementRect(sourceRef, [sourceReady]);
 
   useLayoutEffect(() => {
-    if (!mediaLoaded) return;
-    if (!originRef?.current || !canvasRef?.current) return;
+    if (!sourceReady || !sourceRef?.current || !canvasRef?.current) return;
 
-    if (watchOriginResize) {
+    function setCanvasSize(
+      canvasElement: HTMLCanvasElement,
+      height: number,
+      width: number,
+    ) {
+      canvasElement.height = height;
+      canvasElement.width = width;
+    }
+
+    if (watchSourceResize) {
       observe();
     }
 
-    canvasRef.current.height = rect.height;
-    canvasRef.current.width = rect.width;
+    const canvasElement = canvasRef.current;
+    const sourceElement = sourceRef.current;
 
-    drawCanvasFromMedia(
-      canvasRef.current,
-      originRef.current,
-      rect.width,
-      rect.height
-    );
+    const { height, width } = rect;
+
+    setCanvasSize(canvasElement, height, width);
+
+    drawCanvasImageFromSource(canvasElement, sourceElement, width, height);
 
     return () => {
-      if (watchOriginResize) {
+      if (watchSourceResize) {
         stop();
       }
     };
-  }, [mediaLoaded, canvasRef?.current, originRef?.current]);
+  }, [
+    sourceReady,
+    canvasRef.current,
+    sourceRef.current,
+    rect.width,
+    rect.height,
+  ]);
 
-  return { setMediaLoaded, mediaLoaded };
+  return {
+    setSourceReady,
+    drawCanvasImageFromSource,
+    size: {
+      width: rect.width,
+      height: rect.height,
+    },
+  };
 }
 
 export default useCanvas;

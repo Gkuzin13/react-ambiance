@@ -1,6 +1,7 @@
-import { RefObject, useLayoutEffect, useState } from 'react';
+import { useLayoutEffect, useState } from 'react';
+import type { RefObject } from 'react';
 
-export interface ElementRectValue extends Omit<DOMRect, 'toJSON'> {}
+export type ElementRectValue = Omit<DOMRect, 'toJSON'>;
 
 const defaultRect: ElementRectValue = {
   width: 0,
@@ -13,39 +14,34 @@ const defaultRect: ElementRectValue = {
   right: 0,
 };
 
-function useElementRect(ref: RefObject<Element>) {
+function useElementRect(ref: RefObject<Element>, deps: any[] = []) {
   const [rect, setRect] = useState<ElementRectValue>(defaultRect);
+
+  useLayoutEffect(() => {
+    if (!ref.current) return;
+
+    setRect(ref.current.getBoundingClientRect());
+
+    return () => setRect(defaultRect);
+  }, [ref.current, ...deps]);
 
   const resizeObserver = new ResizeObserver((entries) => {
     setRect(() => entries[0].contentRect);
   });
 
-  useLayoutEffect(() => {
-    if (!ref?.current) return;
-
-    setRect(() => getElementRect(ref.current));
-
-    return () => setRect(() => defaultRect);
-  }, [ref?.current]);
-
   function observe() {
-    if (!ref?.current) return;
+    if (!ref.current) return;
 
     resizeObserver.observe(ref.current);
   }
 
   function stop() {
-    if (!ref?.current) return;
+    if (!ref.current) return;
 
     resizeObserver.disconnect();
   }
 
   return { rect, observe, stop };
-}
-
-function getElementRect(element: Element | null) {
-  if (!element) return defaultRect;
-  return element.getBoundingClientRect();
 }
 
 export default useElementRect;

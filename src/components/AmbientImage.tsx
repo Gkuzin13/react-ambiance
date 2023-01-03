@@ -4,7 +4,6 @@ import CanvasContainer from './CanvasContainer';
 import useAmbientConfig from '../hooks/useAmbientConfig';
 import useCanvas from '../hooks/useCanvas';
 import type { AmbientImageProps } from './types';
-import useElementRect from '../hooks/useElementRect';
 
 function AmbientImage({
   scale = 1.05,
@@ -14,15 +13,19 @@ function AmbientImage({
   children,
 }: AmbientImageProps) {
   const canvasRef = useRef<HTMLCanvasElement>(null);
-  const originRef = useRef<HTMLImageElement | HTMLVideoElement>(null);
+  const sourceRef = useRef<HTMLImageElement | HTMLVideoElement>(null);
 
-  const { setMediaLoaded } = useCanvas({ originRef, canvasRef });
+  const { setSourceReady } = useCanvas({
+    sourceRef,
+    canvasRef,
+    watchSourceResize: true,
+  });
 
   useAmbientConfig({ scale, borderRadius, blur, opacity, canvasRef });
 
   const imgElementProps = {
-    onLoad: () => setMediaLoaded(true),
-    ref: originRef,
+    onLoad: () => setSourceReady(true),
+    ref: sourceRef,
   };
 
   return (

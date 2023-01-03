@@ -12,7 +12,7 @@ function App() {
   });
 
   return (
-    <div className='App'>
+    <div className="App">
       <AmbientVideo
         borderRadius={settings.borderRadius}
         blur={settings.blur}
@@ -23,7 +23,9 @@ function App() {
           muted
           controls
           height={200}
-          src='http://commondatastorage.googleapis.com/gtv-videos-bucket/sample/BigBuckBunny.mp4'
+          loop
+          autoPlay
+          src="http://commondatastorage.googleapis.com/gtv-videos-bucket/sample/BigBuckBunny.mp4"
         ></video>
       </AmbientVideo>
       <AmbientImage
@@ -32,7 +34,7 @@ function App() {
         scale={settings.scale}
       >
         <div>
-          <img src='https://picsum.photos/200/300' alt='' />
+          <img src="https://picsum.photos/200/300" alt="" />
         </div>
       </AmbientImage>
       <div style={{ color: 'white' }}>
@@ -40,7 +42,7 @@ function App() {
           <label>Scale</label>
           <br />
           <input
-            type='range'
+            type="range"
             min={1}
             max={1.1}
             step={0.01}
@@ -54,7 +56,7 @@ function App() {
           <label>Blur</label>
           <br />
           <input
-            type='range'
+            type="range"
             min={5}
             max={50}
             step={1}
@@ -68,7 +70,7 @@ function App() {
           <label>Border Radius</label>
           <br />
           <input
-            type='range'
+            type="range"
             min={0}
             max={50}
             step={1}
@@ -82,7 +84,7 @@ function App() {
           <label>Refresh Rate</label>
           <br />
           <input
-            type='range'
+            type="range"
             min={30}
             max={200}
             step={10}

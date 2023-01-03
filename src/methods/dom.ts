@@ -6,7 +6,7 @@ export type MediaType = 'video' | 'img';
 export const traverseAndPassPropsByElementType = (
   children: ReactNode,
   type: MediaType,
-  props: {}
+  props: object,
 ): ReactNode => {
   return Children.map(children, (child) => {
     if (!isValidElement(child)) return child;
@@ -17,7 +17,7 @@ export const traverseAndPassPropsByElementType = (
       return traverseAndPassPropsByElementType(
         child.props.children,
         type,
-        props
+        props,
       );
     }
 
