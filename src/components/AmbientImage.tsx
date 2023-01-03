@@ -1,49 +1,28 @@
-import { useLayoutEffect, useRef, useState } from 'react';
-import { drawCanvasFromMedia } from '../methods/canvas';
-import { getCssPropertyKey } from '../utils/string';
+import { useRef } from 'react';
 import { traverseAndPassPropsByElementType } from '../methods/dom';
 import CanvasContainer from './CanvasContainer';
-import type { Props } from './types';
+import useAmbientConfig from '../hooks/useAmbientConfig';
+import useCanvas from '../hooks/useCanvas';
+import type { AmbientImageProps } from './types';
+import useElementRect from '../hooks/useElementRect';
 
 function AmbientImage({
   scale = 1.05,
   borderRadius = 8,
   blur = 30,
+  opacity = 0.5,
   children,
-}: Props) {
-  const [mediaLoaded, setMediaLoaded] = useState(false);
-
+}: AmbientImageProps) {
   const canvasRef = useRef<HTMLCanvasElement>(null);
-  const mediaRef = useRef<HTMLImageElement | HTMLVideoElement>(null);
+  const originRef = useRef<HTMLImageElement | HTMLVideoElement>(null);
 
-  useLayoutEffect(() => {
-    if (!mediaLoaded) return;
-    if (!mediaRef.current || !canvasRef.current) return;
+  const { setMediaLoaded } = useCanvas({ originRef, canvasRef });
 
-    const { width, height } = mediaRef.current.getBoundingClientRect();
-
-    canvasRef.current.height = height;
-    canvasRef.current.width = width;
-
-    drawCanvasFromMedia(canvasRef.current, mediaRef.current, width, height);
-  }, [mediaLoaded, canvasRef.current, mediaRef.current]);
-
-  canvasRef.current?.style.setProperty(
-    getCssPropertyKey('canvas-radius'),
-    `${borderRadius}px`
-  );
-  canvasRef.current?.style.setProperty(
-    getCssPropertyKey('canvas-scale'),
-    `${scale}`
-  );
-  canvasRef.current?.style.setProperty(
-    getCssPropertyKey('canvas-blur'),
-    `${blur}px`
-  );
+  useAmbientConfig({ scale, borderRadius, blur, opacity, canvasRef });
 
   const imgElementProps = {
     onLoad: () => setMediaLoaded(true),
-    ref: mediaRef,
+    ref: originRef,
   };
 
   return (

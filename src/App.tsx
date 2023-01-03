@@ -1,8 +1,7 @@
 import { useState } from 'react';
-import AmbientCanvas from './components/CanvasContainer';
 import AmbientImage from './components/AmbientImage';
-import './App.css';
 import AmbientVideo from './components/AmbientVideo';
+import './App.css';
 
 function App() {
   const [settings, setSettings] = useState({
@@ -59,6 +58,7 @@ function App() {
             min={5}
             max={50}
             step={1}
+            defaultValue={30}
             onChange={(e) =>
               setSettings({ ...settings, blur: +e.target.value })
             }
@@ -72,6 +72,7 @@ function App() {
             min={0}
             max={50}
             step={1}
+            defaultValue={20}
             onChange={(e) =>
               setSettings({ ...settings, borderRadius: +e.target.value })
             }

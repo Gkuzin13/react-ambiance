@@ -1,10 +1,11 @@
 import { Children, createElement, isValidElement } from 'react';
 import type { ReactNode } from 'react';
-type Type = 'video' | 'img';
+
+export type MediaType = 'video' | 'img';
 
 export const traverseAndPassPropsByElementType = (
   children: ReactNode,
-  type: Type,
+  type: MediaType,
   props: {}
 ): ReactNode => {
   return Children.map(children, (child) => {
@@ -12,9 +13,7 @@ export const traverseAndPassPropsByElementType = (
 
     if (child.type === type) {
       return createElement(type, { ...props, ...child.props });
-    }
-
-    if (child.props.children) {
+    } else if (child.props.children) {
       return traverseAndPassPropsByElementType(
         child.props.children,
         type,
