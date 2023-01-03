@@ -5,13 +5,17 @@ import useInterval from '../hooks/useInterval';
 import CanvasContainer from './CanvasContainer';
 import { traverseAndPassPropsByElementType } from '../methods/dom';
 import type { AmbientVideoProps } from './types';
+import { CANVAS_CONFIG_VALUES } from '../constants/canvas';
+
+const { SCALE, BORDER_RADIUS, BLUR, OPACITY, REFRESH_RATE } =
+  CANVAS_CONFIG_VALUES;
 
 function AmbientVideo({
-  scale = 1.05,
-  borderRadius = 8,
-  blur = 30,
-  opacity = 0.5,
-  refreshRate = 150,
+  scale = SCALE.DEFAULT,
+  borderRadius = BORDER_RADIUS.DEFAULT,
+  blur = BLUR.DEFAULT,
+  opacity = OPACITY.DEFAULT,
+  refreshRate = REFRESH_RATE.DEFAULT,
   children,
 }: AmbientVideoProps) {
   const [playing, setPlaying] = useState(false);

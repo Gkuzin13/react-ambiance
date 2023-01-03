@@ -1,4 +1,4 @@
-import { useEffect } from 'react';
+import { useLayoutEffect } from 'react';
 import { CANVAS_CSS_PROP_KEYS } from '../constants/canvas';
 import { getCssPropertyKey } from '../utils/string';
 import type { AmbientConfigProps } from '../components/types';
@@ -6,13 +6,13 @@ import type { AmbientConfigProps } from '../components/types';
 const { BORDER_RADIUS, BLUR, SCALE, OPACITY } = CANVAS_CSS_PROP_KEYS;
 
 function useAmbientConfig({
-  scale = 1.05,
-  borderRadius = 8,
-  blur = 30,
-  opacity = 0.5,
+  scale,
+  borderRadius,
+  blur,
+  opacity,
   canvasRef,
 }: AmbientConfigProps) {
-  useEffect(() => {
+  useLayoutEffect(() => {
     if (!canvasRef?.current) return;
 
     const canvasEl = canvasRef.current;

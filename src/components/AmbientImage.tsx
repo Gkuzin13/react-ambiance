@@ -4,12 +4,15 @@ import CanvasContainer from './CanvasContainer';
 import useAmbientConfig from '../hooks/useAmbientConfig';
 import useCanvas from '../hooks/useCanvas';
 import type { AmbientImageProps } from './types';
+import { CANVAS_CONFIG_VALUES } from '../constants/canvas';
+
+const { SCALE, BORDER_RADIUS, BLUR, OPACITY } = CANVAS_CONFIG_VALUES;
 
 function AmbientImage({
-  scale = 1.05,
-  borderRadius = 8,
-  blur = 30,
-  opacity = 0.5,
+  scale = SCALE.DEFAULT,
+  borderRadius = BORDER_RADIUS.DEFAULT,
+  blur = BLUR.DEFAULT,
+  opacity = OPACITY.DEFAULT,
   children,
 }: AmbientImageProps) {
   const canvasRef = useRef<HTMLCanvasElement>(null);
