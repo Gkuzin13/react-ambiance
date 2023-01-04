@@ -1,6 +1,6 @@
 import { useLayoutEffect } from 'react';
 import { CANVAS_CONFIG_VALUES, CANVAS_CSS_PROP_KEYS } from '@/constants/canvas';
-import { setCssProperty } from '@/utils/string';
+import { setCssProperty } from '@/utils/dom';
 import { sanitizeAmbientConfigValue } from '@/utils/number';
 import type { AmbientConfigProps } from '@/components/types';
 

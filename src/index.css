@@ -30,7 +30,7 @@ body {
   place-items: center;
   min-width: 320px;
   min-height: 100vh;
-  background-color: black;
+  background-color: rgb(255, 255, 255);
 }
 
 h1 {

@@ -4,7 +4,7 @@ export const sanitizeAmbientConfigValue = (
   range: CanvasConfigValue,
   value?: number,
 ) => {
-  if (!value) return range.DEFAULT;
+  if (value === undefined || value === null) return range.DEFAULT;
   if (value < range.MIN) return range.MIN;
   if (value > range.MAX) return range.MAX;
 
