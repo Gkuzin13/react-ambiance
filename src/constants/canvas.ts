@@ -5,11 +5,11 @@ type CanvasConfigKeys =
   | 'BORDER_RADIUS'
   | 'REFRESH_RATE';
 
-type CanvasConfig = {
+export type CanvasConfig = {
   [K in CanvasConfigKeys]: CanvasConfigValue;
 };
 
-type CanvasConfigValue = {
+export type CanvasConfigValue = {
   readonly MIN: number;
   readonly MAX: number;
   readonly DEFAULT: number;

@@ -1,5 +1,5 @@
 import { RefObject, useCallback, useLayoutEffect, useState } from 'react';
-import useElementRect from './useElementRect';
+import useElementRect from '@/hooks/useElementRect';
 
 export type useCanvasArgs = {
   sourceRef: RefObject<HTMLImageElement | HTMLVideoElement>;

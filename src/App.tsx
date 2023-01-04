@@ -1,6 +1,6 @@
 import { useState } from 'react';
-import AmbientImage from './components/AmbientImage';
-import AmbientVideo from './components/AmbientVideo';
+import AmbientImage from '@/components/AmbientImage';
+import AmbientVideo from '@/components/AmbientVideo';
 import './App.css';
 
 function App() {

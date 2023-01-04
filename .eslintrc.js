@@ -13,6 +13,10 @@ module.exports = {
       version: 'detect',
     },
     'import/resolver': {
+      typescript: {},
+      alias: {
+        map: ['@', './src'],
+      },
       node: {
         paths: ['src'],
         extensions: ['.js', '.jsx', '.ts', '.tsx'],

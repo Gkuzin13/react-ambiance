@@ -1,11 +1,11 @@
 import { useRef, useState } from 'react';
-import useAmbientConfig from '../hooks/useAmbientConfig';
-import useCanvas from '../hooks/useCanvas';
-import useInterval from '../hooks/useInterval';
-import CanvasContainer from './CanvasContainer';
-import { traverseAndPassPropsByElementType } from '../methods/dom';
+import useAmbientConfig from '@/hooks/useAmbientConfig';
+import useCanvas from '@/hooks/useCanvas';
+import useInterval from '@/hooks/useInterval';
+import CanvasContainer from '@/components/CanvasContainer';
+import { traverseAndPassPropsByElementType } from '@/methods/dom';
+import { CANVAS_CONFIG_VALUES } from '@/constants/canvas';
 import type { AmbientVideoProps } from './types';
-import { CANVAS_CONFIG_VALUES } from '../constants/canvas';
 
 const { SCALE, BORDER_RADIUS, BLUR, OPACITY, REFRESH_RATE } =
   CANVAS_CONFIG_VALUES;
