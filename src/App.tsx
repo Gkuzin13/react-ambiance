@@ -5,11 +5,14 @@ import './App.css';
 
 function App() {
   const [settings, setSettings] = useState({
-    blur: 30,
-    scale: 1,
-    borderRadius: 20,
+    blur: 20,
+    scale: 1.075,
+    borderRadius: 16,
     refreshRate: 150,
+    opacity: 0.75,
   });
+
+  const randomImageMap = [...Array(8).keys()];
 
   return (
     <div className="App">
@@ -18,6 +21,7 @@ function App() {
         blur={settings.blur}
         scale={settings.scale}
         refreshRate={settings.refreshRate}
+        opacity={settings.opacity}
       >
         <video
           muted
@@ -28,15 +32,24 @@ function App() {
           src="http://commondatastorage.googleapis.com/gtv-videos-bucket/sample/BigBuckBunny.mp4"
         ></video>
       </AmbientVideo>
-      <AmbientImage
-        borderRadius={settings.borderRadius}
-        blur={settings.blur}
-        scale={settings.scale}
-      >
-        <div>
-          <img src="https://picsum.photos/200/300" alt="" />
-        </div>
-      </AmbientImage>
+      {randomImageMap.map((key) => {
+        return (
+          <AmbientImage
+            key={key}
+            borderRadius={settings.borderRadius}
+            blur={settings.blur}
+            scale={settings.scale}
+            opacity={settings.opacity}
+          >
+            <div>
+              <img
+                src={`https://loremflickr.com/300/200?random=${key}`}
+                alt={'alt'}
+              />
+            </div>
+          </AmbientImage>
+        );
+      })}
       <div style={{ color: 'white' }}>
         <div>
           <label>Scale</label>
@@ -49,6 +62,20 @@ function App() {
             defaultValue={1}
             onChange={(e) =>
               setSettings({ ...settings, scale: +e.target.value })
+            }
+          />
+        </div>
+        <div>
+          <label>Opacity</label>
+          <br />
+          <input
+            type="range"
+            min={0.2}
+            max={1}
+            step={0.1}
+            defaultValue={0.5}
+            onChange={(e) =>
+              setSettings({ ...settings, opacity: +e.target.value })
             }
           />
         </div>

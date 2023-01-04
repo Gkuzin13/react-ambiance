@@ -1,6 +1,6 @@
 import { describe, expect, it } from 'vitest';
 import { Window } from 'happy-dom';
-import { setCssProperty } from '../dom';
+import { setCssProperty } from '@/utils/dom';
 
 describe('setCssProperty', () => {
   const testProperty = {
