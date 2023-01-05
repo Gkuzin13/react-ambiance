@@ -1,30 +1,22 @@
-import { useRef } from 'react';
 import { traverseAndPassPropsByElementType } from '@/methods/dom';
-import CanvasContainer from '@/components/CanvasContainer';
-import useAmbientConfig from '@/hooks/useAmbientConfig';
-import useCanvas from '@/hooks/useCanvas';
+import AmbientContainer from '@/components/AmbientContainer';
+import AmbientCanvas from '@/components/AmbientCanvas';
+import useSource from '@/hooks/useSource';
 import { CANVAS_CONFIG_VALUES } from '@/constants/canvas';
 import type { AmbientImageProps } from './types';
 
 const { SCALE, BORDER_RADIUS, BLUR, OPACITY } = CANVAS_CONFIG_VALUES;
 
 function AmbientImage({
-  scale = SCALE.DEFAULT,
-  borderRadius = BORDER_RADIUS.DEFAULT,
-  blur = BLUR.DEFAULT,
-  opacity = OPACITY.DEFAULT,
+  config: {
+    scale = SCALE.DEFAULT,
+    borderRadius = BORDER_RADIUS.DEFAULT,
+    blur = BLUR.DEFAULT,
+    opacity = OPACITY.DEFAULT,
+  },
   children,
 }: AmbientImageProps) {
-  const canvasRef = useRef<HTMLCanvasElement>(null);
-  const sourceRef = useRef<HTMLImageElement | HTMLVideoElement>(null);
-
-  const { setSourceReady } = useCanvas({
-    sourceRef,
-    canvasRef,
-    watchSourceResize: true,
-  });
-
-  useAmbientConfig({ scale, borderRadius, blur, opacity, canvasRef });
+  const { sourceRef, sourceReady, setSourceReady } = useSource();
 
   const imgElementProps = {
     onLoad: () => setSourceReady(true),
@@ -32,11 +24,17 @@ function AmbientImage({
   };
 
   return (
-    <CanvasContainer ref={canvasRef}>
+    <AmbientContainer>
       {traverseAndPassPropsByElementType(children, 'img', {
         ...imgElementProps,
       })}
-    </CanvasContainer>
+      {sourceReady && (
+        <AmbientCanvas
+          sourceRef={sourceRef}
+          config={{ scale, blur, opacity, borderRadius }}
+        />
+      )}
+    </AmbientContainer>
   );
 }
 

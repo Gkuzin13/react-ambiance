@@ -1,22 +1,21 @@
-import { useLayoutEffect } from 'react';
+import { RefObject, useLayoutEffect } from 'react';
 import { CANVAS_CONFIG_VALUES, CANVAS_CSS_PROP_KEYS } from '@/constants/canvas';
 import { setCssProperty } from '@/utils/dom';
 import { sanitizeAmbientConfigValue } from '@/utils/number';
 import type { AmbientConfigProps } from '@/components/types';
 
-const { BORDER_RADIUS, BLUR, SCALE, OPACITY } = CANVAS_CSS_PROP_KEYS;
+interface useConfigProps {
+  canvasRef: RefObject<HTMLCanvasElement>;
+  config: AmbientConfigProps;
+}
 
-function useAmbientConfig({
-  scale,
-  borderRadius,
-  blur,
-  opacity,
-  canvasRef,
-}: AmbientConfigProps) {
+function useAmbientConfig({ config, canvasRef }: useConfigProps) {
+  const { BORDER_RADIUS, BLUR, SCALE, OPACITY } = CANVAS_CSS_PROP_KEYS;
+
+  const { scale, borderRadius, blur, opacity } = config;
+
   useLayoutEffect(() => {
     if (!canvasRef?.current) return;
-
-    const canvasEl = canvasRef.current;
 
     const sanitizedScale = sanitizeAmbientConfigValue(
       CANVAS_CONFIG_VALUES.SCALE,
@@ -37,6 +36,8 @@ function useAmbientConfig({
       CANVAS_CONFIG_VALUES.BORDER_RADIUS,
       borderRadius,
     );
+
+    const canvasEl = canvasRef.current;
 
     setCssProperty(canvasEl, SCALE, `${sanitizedScale}`);
     setCssProperty(canvasEl, BLUR, `${sanitizedBlur}px`);

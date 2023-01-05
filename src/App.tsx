@@ -16,13 +16,7 @@ function App() {
 
   return (
     <div className="App">
-      <AmbientVideo
-        borderRadius={settings.borderRadius}
-        blur={settings.blur}
-        scale={settings.scale}
-        refreshRate={settings.refreshRate}
-        opacity={settings.opacity}
-      >
+      <AmbientVideo config={{ ...settings }}>
         <video
           muted
           controls
@@ -34,13 +28,7 @@ function App() {
       </AmbientVideo>
       {randomImageMap.map((key) => {
         return (
-          <AmbientImage
-            key={key}
-            borderRadius={settings.borderRadius}
-            blur={settings.blur}
-            scale={settings.scale}
-            opacity={settings.opacity}
-          >
+          <AmbientImage key={key} config={{ ...settings }}>
             <div>
               <img
                 src={`https://loremflickr.com/300/200?random=${key}`}

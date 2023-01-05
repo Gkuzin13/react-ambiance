@@ -1,4 +1,4 @@
-import { PropsWithChildren, RefObject } from 'react';
+import { PropsWithChildren } from 'react';
 
 export interface AmbientConfigProps {
   scale?: number;
@@ -6,14 +6,14 @@ export interface AmbientConfigProps {
   blur?: number;
   opacity?: number;
   refreshRate?: number;
-  canvasRef?: RefObject<HTMLCanvasElement>;
 }
 
-export interface AmbientVideoProps
-  extends AmbientConfigProps,
-    PropsWithChildren {}
+export interface AmbientVideoProps extends PropsWithChildren {
+  config: AmbientConfigProps;
+}
 
 export interface AmbientImageProps
-  extends AmbientConfigProps,
-    PropsWithChildren,
-    Omit<AmbientConfigProps, 'refreshRate'> {}
+  extends PropsWithChildren,
+    Omit<AmbientConfigProps, 'refreshRate'> {
+  config: AmbientConfigProps;
+}

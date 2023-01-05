@@ -1,8 +1,7 @@
-import { useRef, useState } from 'react';
-import useAmbientConfig from '@/hooks/useAmbientConfig';
-import useCanvas from '@/hooks/useCanvas';
-import useInterval from '@/hooks/useInterval';
-import CanvasContainer from '@/components/CanvasContainer';
+import { useState } from 'react';
+import CanvasContainer from '@/components/AmbientContainer';
+import useSource from '@/hooks/useSource';
+import AmbientCanvas from './AmbientCanvas';
 import { traverseAndPassPropsByElementType } from '@/methods/dom';
 import { CANVAS_CONFIG_VALUES } from '@/constants/canvas';
 import type { AmbientVideoProps } from './types';
@@ -11,35 +10,18 @@ const { SCALE, BORDER_RADIUS, BLUR, OPACITY, REFRESH_RATE } =
   CANVAS_CONFIG_VALUES;
 
 function AmbientVideo({
-  scale = SCALE.DEFAULT,
-  borderRadius = BORDER_RADIUS.DEFAULT,
-  blur = BLUR.DEFAULT,
-  opacity = OPACITY.DEFAULT,
-  refreshRate = REFRESH_RATE.DEFAULT,
+  config: {
+    scale = SCALE.DEFAULT,
+    borderRadius = BORDER_RADIUS.DEFAULT,
+    blur = BLUR.DEFAULT,
+    opacity = OPACITY.DEFAULT,
+    refreshRate = REFRESH_RATE.DEFAULT,
+  },
   children,
 }: AmbientVideoProps) {
   const [playing, setPlaying] = useState(false);
 
-  const canvasRef = useRef<HTMLCanvasElement>(null);
-  const sourceRef = useRef<HTMLImageElement | HTMLVideoElement>(null);
-
-  const { size, setSourceReady, drawCanvasImageFromSource } = useCanvas({
-    sourceRef,
-    canvasRef,
-  });
-
-  useAmbientConfig({ scale, blur, opacity, borderRadius, canvasRef });
-
-  useInterval(
-    () =>
-      drawCanvasImageFromSource(
-        canvasRef.current,
-        sourceRef.current,
-        size.width,
-        size.height,
-      ),
-    playing ? refreshRate : null,
-  );
+  const { sourceRef, sourceReady, setSourceReady } = useSource();
 
   const videoElementProps = {
     onPlaying: () => {
@@ -50,10 +32,22 @@ function AmbientVideo({
   };
 
   return (
-    <CanvasContainer ref={canvasRef}>
+    <CanvasContainer>
       {traverseAndPassPropsByElementType(children, 'video', {
         ...videoElementProps,
       })}
+      {sourceReady && (
+        <AmbientCanvas
+          sourceRef={sourceRef}
+          config={{
+            scale,
+            blur,
+            borderRadius,
+            opacity,
+            refreshRate: playing ? refreshRate : undefined,
+          }}
+        />
+      )}
     </CanvasContainer>
   );
 }

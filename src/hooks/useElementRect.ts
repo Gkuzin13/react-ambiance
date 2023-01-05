@@ -14,7 +14,7 @@ const defaultRect: ElementRectValue = {
   right: 0,
 };
 
-function useElementRect(ref: RefObject<Element>, deps: any[] = []) {
+function useElementRect(ref: RefObject<Element>) {
   const [rect, setRect] = useState<ElementRectValue>(defaultRect);
 
   useLayoutEffect(() => {
@@ -23,7 +23,7 @@ function useElementRect(ref: RefObject<Element>, deps: any[] = []) {
     setRect(ref.current.getBoundingClientRect());
 
     return () => setRect(defaultRect);
-  }, [ref.current, ...deps]);
+  }, [ref.current]);
 
   const resizeObserver = new ResizeObserver((entries) => {
     setRect(() => entries[0].contentRect);

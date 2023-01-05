@@ -1,4 +1,4 @@
-import { useEffect, useRef } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import useIsomorphicLayoutEffect from '@/hooks/useIsomorphicLayoutEffect';
 
 function useInterval(callback: () => void, delay: number | null) {
@@ -15,7 +15,9 @@ function useInterval(callback: () => void, delay: number | null) {
 
     const id = setInterval(() => savedCallback.current(), delay);
 
-    return () => clearInterval(id);
+    return () => {
+      clearInterval(id);
+    };
   }, [delay]);
 }
 

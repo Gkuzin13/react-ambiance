@@ -1,4 +1,4 @@
-import { RefObject, useCallback, useLayoutEffect, useState } from 'react';
+import { RefObject, useCallback, useLayoutEffect } from 'react';
 import useElementRect from '@/hooks/useElementRect';
 
 export type useCanvasArgs = {
@@ -8,8 +8,6 @@ export type useCanvasArgs = {
 };
 
 function useCanvas({ sourceRef, canvasRef, watchSourceResize }: useCanvasArgs) {
-  const [sourceReady, setSourceReady] = useState(false);
-
   const drawCanvasImageFromSource = useCallback(
     (
       canvasElement: HTMLCanvasElement | null,
@@ -25,19 +23,10 @@ function useCanvas({ sourceRef, canvasRef, watchSourceResize }: useCanvasArgs) {
     [],
   );
 
-  const { rect, observe, stop } = useElementRect(sourceRef, [sourceReady]);
+  const { rect, observe, stop } = useElementRect(sourceRef);
 
   useLayoutEffect(() => {
-    if (!sourceReady || !sourceRef?.current || !canvasRef?.current) return;
-
-    function setCanvasSize(
-      canvasElement: HTMLCanvasElement,
-      height: number,
-      width: number,
-    ) {
-      canvasElement.height = height;
-      canvasElement.width = width;
-    }
+    if (!sourceRef?.current || !canvasRef?.current) return;
 
     if (watchSourceResize) {
       observe();
@@ -48,8 +37,6 @@ function useCanvas({ sourceRef, canvasRef, watchSourceResize }: useCanvasArgs) {
 
     const { height, width } = rect;
 
-    setCanvasSize(canvasElement, height, width);
-
     drawCanvasImageFromSource(canvasElement, sourceElement, width, height);
 
     return () => {
@@ -57,16 +44,9 @@ function useCanvas({ sourceRef, canvasRef, watchSourceResize }: useCanvasArgs) {
         stop();
       }
     };
-  }, [
-    sourceReady,
-    canvasRef.current,
-    sourceRef.current,
-    rect.width,
-    rect.height,
-  ]);
+  }, [canvasRef.current, sourceRef.current, rect.width, rect.height]);
 
   return {
-    setSourceReady,
     drawCanvasImageFromSource,
     size: {
       width: rect.width,
