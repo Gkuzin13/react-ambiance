@@ -8,6 +8,7 @@ import type { AmbientVideoProps } from './types';
 
 function AmbientVideo({
   config = CANVAS_CONFIG_DEFAULTS(),
+  watchSourceResize,
   children,
 }: AmbientVideoProps) {
   const [playing, setPlaying] = useState(false);
@@ -30,6 +31,7 @@ function AmbientVideo({
       {sourceReady && (
         <AmbientCanvas
           sourceRef={sourceRef}
+          watchSourceResize={watchSourceResize}
           config={{
             ...config,
             refreshRate: playing ? config.refreshRate : undefined,

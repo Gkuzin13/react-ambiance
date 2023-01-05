@@ -7,6 +7,7 @@ import type { AmbientImageProps } from './types';
 
 function AmbientImage({
   config = CANVAS_CONFIG_DEFAULTS(['refreshRate']),
+  watchSourceResize,
   children,
 }: AmbientImageProps) {
   const { sourceRef, sourceReady, setSourceReady } = useSource();
@@ -21,7 +22,13 @@ function AmbientImage({
       {traverseAndPassPropsByElementType(children, 'img', {
         ...imgElementProps,
       })}
-      {sourceReady && <AmbientCanvas sourceRef={sourceRef} config={config} />}
+      {sourceReady && (
+        <AmbientCanvas
+          sourceRef={sourceRef}
+          watchSourceResize={watchSourceResize}
+          config={config}
+        />
+      )}
     </AmbientContainer>
   );
 }

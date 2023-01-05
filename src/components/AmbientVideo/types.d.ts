@@ -1,6 +1,5 @@
 import type { PropsWithChildren } from 'react';
-import type { CanvasConfig } from '@/constants/canvas';
-
-export interface AmbientVideoProps extends PropsWithChildren {
-  config: CanvasConfig;
-}
+import type { AmbientCanvasProps } from '../AmbientCanvas/types';
+export interface AmbientVideoProps
+  extends PropsWithChildren,
+    Omit<AmbientCanvasProps, 'sourceRef'> {}

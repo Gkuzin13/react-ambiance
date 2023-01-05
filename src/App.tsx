@@ -16,7 +16,7 @@ function App() {
 
   return (
     <div className="App">
-      <AmbientVideo config={{ ...settings }}>
+      <AmbientVideo config={{ ...settings }} watchSourceResize>
         <video
           muted
           controls
@@ -28,7 +28,7 @@ function App() {
       </AmbientVideo>
       {randomImageMap.map((key) => {
         return (
-          <AmbientImage key={key} config={{ ...settings }}>
+          <AmbientImage key={key} watchSourceResize config={{ ...settings }}>
             <div>
               <img
                 src={`https://loremflickr.com/300/200?random=${key}`}
