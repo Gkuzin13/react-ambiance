@@ -1,49 +1,53 @@
-import { RefObject, useLayoutEffect } from 'react';
+import { useLayoutEffect } from 'react';
 import { CANVAS_CONFIG_VALUES, CANVAS_CSS_PROP_KEYS } from '@/constants/canvas';
 import { setCssProperty } from '@/utils/dom';
 import { sanitizeAmbientConfigValue } from '@/utils/number';
-import type { AmbientConfigProps } from '@/components/types';
-
-interface useConfigProps {
+import type { CanvasConfig } from '@/constants/canvas';
+import type { RefObject } from 'react';
+export interface useConfigProps {
   canvasRef: RefObject<HTMLCanvasElement>;
-  config: AmbientConfigProps;
+  config: CanvasConfig;
 }
 
 function useAmbientConfig({ config, canvasRef }: useConfigProps) {
-  const { BORDER_RADIUS, BLUR, SCALE, OPACITY } = CANVAS_CSS_PROP_KEYS;
-
-  const { scale, borderRadius, blur, opacity } = config;
-
   useLayoutEffect(() => {
     if (!canvasRef?.current) return;
 
     const sanitizedScale = sanitizeAmbientConfigValue(
-      CANVAS_CONFIG_VALUES.SCALE,
-      scale,
+      CANVAS_CONFIG_VALUES.scale,
+      config.scale,
     );
 
     const sanitizedBlur = sanitizeAmbientConfigValue(
-      CANVAS_CONFIG_VALUES.BLUR,
-      blur,
+      CANVAS_CONFIG_VALUES.blur,
+      config.blur,
     );
 
     const sanitizedOpacity = sanitizeAmbientConfigValue(
-      CANVAS_CONFIG_VALUES.OPACITY,
-      opacity,
+      CANVAS_CONFIG_VALUES.opacity,
+      config.opacity,
     );
 
     const sanitizedRadius = sanitizeAmbientConfigValue(
-      CANVAS_CONFIG_VALUES.BORDER_RADIUS,
-      borderRadius,
+      CANVAS_CONFIG_VALUES.borderRadius,
+      config.borderRadius,
     );
 
     const canvasEl = canvasRef.current;
 
-    setCssProperty(canvasEl, SCALE, `${sanitizedScale}`);
-    setCssProperty(canvasEl, BLUR, `${sanitizedBlur}px`);
-    setCssProperty(canvasEl, OPACITY, `${sanitizedOpacity}`);
-    setCssProperty(canvasEl, BORDER_RADIUS, `${sanitizedRadius}px`);
-  }, [scale, borderRadius, blur, opacity, canvasRef]);
+    setCssProperty(canvasEl, CANVAS_CSS_PROP_KEYS.scale, `${sanitizedScale}`);
+    setCssProperty(canvasEl, CANVAS_CSS_PROP_KEYS.blur, `${sanitizedBlur}px`);
+    setCssProperty(
+      canvasEl,
+      CANVAS_CSS_PROP_KEYS.opacity,
+      `${sanitizedOpacity}`,
+    );
+    setCssProperty(
+      canvasEl,
+      CANVAS_CSS_PROP_KEYS.borderRadius,
+      `${sanitizedRadius}px`,
+    );
+  }, [config, canvasRef]);
 }
 
 export default useAmbientConfig;

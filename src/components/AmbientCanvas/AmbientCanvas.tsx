@@ -1,14 +1,8 @@
-import { RefObject, useCallback, useLayoutEffect, useRef } from 'react';
-import { AmbientConfigProps } from './types';
+import { useCallback, useLayoutEffect, useRef } from 'react';
 import useAmbientConfig from '@/hooks/useAmbientConfig';
 import useElementRect from '@/hooks/useElementRect';
 import useInterval from '@/hooks/useInterval';
-
-export type AmbientCanvasProps = {
-  sourceRef: RefObject<HTMLImageElement | HTMLVideoElement>;
-  watchSourceResize?: boolean;
-  config: AmbientConfigProps;
-};
+import type { AmbientCanvasProps } from './types';
 
 function AmbientCanvas({
   sourceRef,
@@ -42,7 +36,7 @@ function AmbientCanvas({
         rect.width,
         rect.height,
       ),
-    config?.refreshRate || null,
+    config.refreshRate ? config.refreshRate : null,
   );
 
   useLayoutEffect(() => {
@@ -68,17 +62,14 @@ function AmbientCanvas({
     };
   }, [canvasRef.current, sourceRef.current, rect.width, rect.height]);
 
-  useAmbientConfig({
-    config,
-    canvasRef,
-  });
+  useAmbientConfig({ config, canvasRef });
 
   return (
     <canvas
       ref={canvasRef}
       width={rect.width}
       height={rect.height}
-      className="canvas"
+      className="ambient-canvas"
     />
   );
 }

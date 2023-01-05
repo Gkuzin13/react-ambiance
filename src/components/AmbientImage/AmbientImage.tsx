@@ -1,19 +1,12 @@
 import { traverseAndPassPropsByElementType } from '@/methods/dom';
-import AmbientContainer from '@/components/AmbientContainer';
-import AmbientCanvas from '@/components/AmbientCanvas';
+import AmbientContainer from '@/components/AmbientContainer/AmbientContainer';
+import AmbientCanvas from '@/components/AmbientCanvas/AmbientCanvas';
 import useSource from '@/hooks/useSource';
-import { CANVAS_CONFIG_VALUES } from '@/constants/canvas';
+import { CANVAS_CONFIG_DEFAULTS } from '@/constants/canvas';
 import type { AmbientImageProps } from './types';
 
-const { SCALE, BORDER_RADIUS, BLUR, OPACITY } = CANVAS_CONFIG_VALUES;
-
 function AmbientImage({
-  config: {
-    scale = SCALE.DEFAULT,
-    borderRadius = BORDER_RADIUS.DEFAULT,
-    blur = BLUR.DEFAULT,
-    opacity = OPACITY.DEFAULT,
-  },
+  config = CANVAS_CONFIG_DEFAULTS(['refreshRate']),
   children,
 }: AmbientImageProps) {
   const { sourceRef, sourceReady, setSourceReady } = useSource();
@@ -28,12 +21,7 @@ function AmbientImage({
       {traverseAndPassPropsByElementType(children, 'img', {
         ...imgElementProps,
       })}
-      {sourceReady && (
-        <AmbientCanvas
-          sourceRef={sourceRef}
-          config={{ scale, blur, opacity, borderRadius }}
-        />
-      )}
+      {sourceReady && <AmbientCanvas sourceRef={sourceRef} config={config} />}
     </AmbientContainer>
   );
 }

@@ -1,22 +1,13 @@
 import { useState } from 'react';
-import CanvasContainer from '@/components/AmbientContainer';
+import CanvasContainer from '@/components/AmbientContainer/AmbientContainer';
+import AmbientCanvas from '../AmbientCanvas/AmbientCanvas';
 import useSource from '@/hooks/useSource';
-import AmbientCanvas from './AmbientCanvas';
 import { traverseAndPassPropsByElementType } from '@/methods/dom';
-import { CANVAS_CONFIG_VALUES } from '@/constants/canvas';
+import { CANVAS_CONFIG_DEFAULTS } from '@/constants/canvas';
 import type { AmbientVideoProps } from './types';
 
-const { SCALE, BORDER_RADIUS, BLUR, OPACITY, REFRESH_RATE } =
-  CANVAS_CONFIG_VALUES;
-
 function AmbientVideo({
-  config: {
-    scale = SCALE.DEFAULT,
-    borderRadius = BORDER_RADIUS.DEFAULT,
-    blur = BLUR.DEFAULT,
-    opacity = OPACITY.DEFAULT,
-    refreshRate = REFRESH_RATE.DEFAULT,
-  },
+  config = CANVAS_CONFIG_DEFAULTS(),
   children,
 }: AmbientVideoProps) {
   const [playing, setPlaying] = useState(false);
@@ -40,11 +31,8 @@ function AmbientVideo({
         <AmbientCanvas
           sourceRef={sourceRef}
           config={{
-            scale,
-            blur,
-            borderRadius,
-            opacity,
-            refreshRate: playing ? refreshRate : undefined,
+            ...config,
+            refreshRate: playing ? config.refreshRate : undefined,
           }}
         />
       )}

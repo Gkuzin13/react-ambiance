@@ -1,51 +1,76 @@
-type CanvasConfigKeys =
-  | 'SCALE'
-  | 'BLUR'
-  | 'OPACITY'
-  | 'BORDER_RADIUS'
-  | 'REFRESH_RATE';
+export type CanvasConfigKey =
+  | 'scale'
+  | 'blur'
+  | 'opacity'
+  | 'borderRadius'
+  | 'refreshRate';
 
 export type CanvasConfig = {
-  [K in CanvasConfigKeys]: CanvasConfigValue;
+  [K in CanvasConfigKey]?: number;
+};
+
+export type CanvasCssPropKey = {
+  readonly [K in Exclude<CanvasConfigKey, 'refreshRate'>]: string;
 };
 
 export type CanvasConfigValue = {
-  readonly MIN: number;
-  readonly MAX: number;
-  readonly DEFAULT: number;
+  min: number;
+  max: number;
+  default: number;
 };
 
-export const CANVAS_CSS_PROP_KEYS = Object.freeze({
-  SCALE: 'canvas-scale',
-  BLUR: 'canvas-blur',
-  OPACITY: 'canvas-opacity',
-  BORDER_RADIUS: 'canvas-radius',
-} as const);
+export type CanvasConfigValues = {
+  [K in CanvasConfigKey]: CanvasConfigValue;
+};
 
-export const CANVAS_CONFIG_VALUES: CanvasConfig = Object.freeze({
-  SCALE: {
-    MIN: 1,
-    MAX: 1.1,
-    DEFAULT: 1,
+export type CanvasConfigDefaults = {
+  [K in CanvasConfigKey]?: number;
+};
+
+export const CANVAS_CSS_PROP_KEYS: CanvasCssPropKey = Object.freeze({
+  scale: 'canvas-scale',
+  blur: 'canvas-blur',
+  opacity: 'canvas-opacity',
+  borderRadius: 'canvas-radius',
+});
+
+export const CANVAS_CONFIG_VALUES: CanvasConfigValues = Object.freeze({
+  scale: {
+    min: 1,
+    max: 1.1,
+    default: 1,
   },
-  BLUR: {
-    MIN: 10,
-    MAX: 50,
-    DEFAULT: 30,
+  blur: {
+    min: 10,
+    max: 50,
+    default: 30,
   },
-  OPACITY: {
-    MIN: 0.5,
-    MAX: 1,
-    DEFAULT: 0.5,
+  opacity: {
+    min: 0.5,
+    max: 1,
+    default: 0.5,
   },
-  BORDER_RADIUS: {
-    MIN: 0,
-    MAX: 24,
-    DEFAULT: 16,
+  borderRadius: {
+    min: 0,
+    max: 24,
+    default: 16,
   },
-  REFRESH_RATE: {
-    MIN: 24,
-    MAX: 200,
-    DEFAULT: 150,
+  refreshRate: {
+    min: 24,
+    max: 200,
+    default: 150,
   },
 });
+
+export const CANVAS_CONFIG_DEFAULTS = (omit?: CanvasConfigKey[]) => {
+  return Object.entries(CANVAS_CONFIG_VALUES).reduce(
+    (acc: CanvasConfigDefaults, [key, value]) => {
+      if (omit?.includes(key as CanvasConfigKey)) return acc;
+
+      acc[key as keyof CanvasConfig] = value.default;
+
+      return acc;
+    },
+    {},
+  );
+};

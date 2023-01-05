@@ -18,7 +18,7 @@
   z-index: 1;
 }
 
-.canvas {
+.ambient-canvas {
   border-radius: var(--canvas-radius, 8px);
   position: absolute;
   top: 50%;
