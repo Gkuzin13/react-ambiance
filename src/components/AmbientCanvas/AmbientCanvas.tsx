@@ -1,7 +1,8 @@
 import { useLayoutEffect, useRef } from 'react';
-import useAmbientConfig from '@/hooks/useAmbientConfig';
 import useElementRect from '@/hooks/useElementRect';
 import animate from '@/methods/animate';
+import { canvas } from './styles.css';
+import { canvasCssPropKeys } from '@/constants/canvas';
 import type { AmbientCanvasProps } from './types';
 
 function AmbientCanvas({
@@ -76,16 +77,27 @@ function AmbientCanvas({
         unobserve();
       }
     };
-  }, [watchSourceResize, config, rect.width, rect.height, animate]);
-
-  useAmbientConfig({ config, canvasRef });
+  }, [
+    watchSourceResize,
+    config.frameRate,
+    config.fadeDelay,
+    rect.width,
+    rect.height,
+    animate,
+  ]);
 
   return (
     <canvas
       ref={canvasRef}
       width={rect.width}
       height={rect.height}
-      className="ambient-canvas"
+      className={canvas}
+      style={{
+        [`${canvasCssPropKeys.blur}`]: `${config.blur}px`,
+        [`${canvasCssPropKeys.borderRadius}`]: `${config.borderRadius}px`,
+        [`${canvasCssPropKeys.opacity}`]: config.opacity,
+        [`${canvasCssPropKeys.scale}`]: config.scale,
+      }}
     />
   );
 }

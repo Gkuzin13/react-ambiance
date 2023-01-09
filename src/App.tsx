@@ -25,7 +25,7 @@ function App() {
       </AmbientVideo>
       {[...Array(1).keys()].map((key) => {
         return (
-          <AmbientImage key={key} watchSourceResize>
+          <AmbientImage key={key} watchSourceResize config={settings}>
             <div>
               <img
                 src={`https://loremflickr.com/300/200?random=${key}`}
@@ -45,7 +45,7 @@ function App() {
                 type="range"
                 min={value.min}
                 max={value.max}
-                step={0.1}
+                step={0.01}
                 defaultValue={value.default}
                 onChange={(e) =>
                   setSettings({ ...settings, [key]: +e.target.value })

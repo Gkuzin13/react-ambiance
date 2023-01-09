@@ -2,8 +2,8 @@ import { traverseAndPassPropsByElementType } from '@/methods/dom';
 import AmbientContainer from '@/components/AmbientContainer/AmbientContainer';
 import AmbientCanvas from '@/components/AmbientCanvas/AmbientCanvas';
 import useSource from '@/hooks/useSource';
-import type { AmbientImageProps } from './types';
 import { canvasDefaultConfigGenerator } from '@/constants/canvas';
+import type { AmbientImageProps } from './types';
 
 function AmbientImage({
   config = canvasDefaultConfigGenerator(['frameRate']),
@@ -16,6 +16,8 @@ function AmbientImage({
     onLoad: () => setSourceReady(true),
     ref: sourceRef,
   };
+
+  console.log(config);
   return (
     <AmbientContainer>
       {traverseAndPassPropsByElementType(children, 'img', {

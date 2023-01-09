@@ -1,8 +1,8 @@
 export const canvasCssPropKeys = Object.freeze({
-  scale: 'canvas-scale',
-  blur: 'canvas-blur',
-  opacity: 'canvas-opacity',
-  borderRadius: 'canvas-radius',
+  scale: '--canvas-scale',
+  blur: '--canvas-blur',
+  opacity: '--canvas-opacity',
+  borderRadius: '--canvas-radius',
 });
 
 export const canvasConfigValues = Object.freeze({
