@@ -1,9 +1,9 @@
 export const canvasCssPropKeys = Object.freeze({
-  scale: '--canvas-scale',
-  blur: '--canvas-blur',
-  opacity: '--canvas-opacity',
-  borderRadius: '--canvas-radius',
-});
+  scale: '--ambient-scale',
+  blur: '--ambient-blur',
+  opacity: '--ambient-opacity',
+  borderRadius: '--ambient-radius',
+} as const);
 
 export const canvasConfigValues = Object.freeze({
   scale: {
@@ -17,9 +17,9 @@ export const canvasConfigValues = Object.freeze({
     default: 50,
   },
   opacity: {
-    min: 0.75,
+    min: 0.1,
     max: 1,
-    default: 0.35,
+    default: 0.5,
   },
   borderRadius: {
     min: 0,

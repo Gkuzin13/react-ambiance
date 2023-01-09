@@ -17,7 +17,6 @@ function AmbientImage({
     ref: sourceRef,
   };
 
-  console.log(config);
   return (
     <AmbientContainer>
       {traverseAndPassPropsByElementType(children, 'img', {
