@@ -3,11 +3,11 @@ import CanvasContainer from '@/components/AmbientContainer/AmbientContainer';
 import AmbientCanvas from '../AmbientCanvas/AmbientCanvas';
 import useSource from '@/hooks/useSource';
 import { traverseAndPassPropsByElementType } from '@/methods/dom';
-import { CANVAS_CONFIG_DEFAULTS } from '@/constants/canvas';
+import { canvasDefaultConfigGenerator } from '@/constants/canvas';
 import type { AmbientVideoProps } from './types';
 
 function AmbientVideo({
-  config = CANVAS_CONFIG_DEFAULTS(),
+  config = canvasDefaultConfigGenerator(),
   watchSourceResize,
   children,
 }: AmbientVideoProps) {
@@ -34,7 +34,7 @@ function AmbientVideo({
           watchSourceResize={watchSourceResize}
           config={{
             ...config,
-            refreshRate: playing ? config.refreshRate : undefined,
+            frameRate: playing ? config.frameRate : 0,
           }}
         />
       )}

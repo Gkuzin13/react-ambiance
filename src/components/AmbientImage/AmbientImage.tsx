@@ -2,11 +2,11 @@ import { traverseAndPassPropsByElementType } from '@/methods/dom';
 import AmbientContainer from '@/components/AmbientContainer/AmbientContainer';
 import AmbientCanvas from '@/components/AmbientCanvas/AmbientCanvas';
 import useSource from '@/hooks/useSource';
-import { CANVAS_CONFIG_DEFAULTS } from '@/constants/canvas';
 import type { AmbientImageProps } from './types';
+import { canvasDefaultConfigGenerator } from '@/constants/canvas';
 
 function AmbientImage({
-  config = CANVAS_CONFIG_DEFAULTS(['refreshRate']),
+  config = canvasDefaultConfigGenerator(['frameRate']),
   watchSourceResize,
   children,
 }: AmbientImageProps) {
@@ -16,7 +16,6 @@ function AmbientImage({
     onLoad: () => setSourceReady(true),
     ref: sourceRef,
   };
-
   return (
     <AmbientContainer>
       {traverseAndPassPropsByElementType(children, 'img', {
@@ -26,7 +25,7 @@ function AmbientImage({
         <AmbientCanvas
           sourceRef={sourceRef}
           watchSourceResize={watchSourceResize}
-          config={config}
+          config={{ ...config, fadeDelay: 1 }}
         />
       )}
     </AmbientContainer>

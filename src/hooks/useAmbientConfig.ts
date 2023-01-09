@@ -1,5 +1,5 @@
 import { useLayoutEffect } from 'react';
-import { CANVAS_CONFIG_VALUES, CANVAS_CSS_PROP_KEYS } from '@/constants/canvas';
+import { canvasConfigValues, canvasCssPropKeys } from '@/constants/canvas';
 import { setCssProperty } from '@/utils/dom';
 import { sanitizeAmbientConfigValue } from '@/utils/number';
 import type { CanvasConfig } from '@/constants/canvas';
@@ -14,37 +14,33 @@ function useAmbientConfig({ config, canvasRef }: useConfigProps) {
     if (!canvasRef?.current) return;
 
     const sanitizedScale = sanitizeAmbientConfigValue(
-      CANVAS_CONFIG_VALUES.scale,
+      canvasConfigValues.scale,
       config.scale,
     );
 
     const sanitizedBlur = sanitizeAmbientConfigValue(
-      CANVAS_CONFIG_VALUES.blur,
+      canvasConfigValues.blur,
       config.blur,
     );
 
     const sanitizedOpacity = sanitizeAmbientConfigValue(
-      CANVAS_CONFIG_VALUES.opacity,
+      canvasConfigValues.opacity,
       config.opacity,
     );
 
     const sanitizedRadius = sanitizeAmbientConfigValue(
-      CANVAS_CONFIG_VALUES.borderRadius,
+      canvasConfigValues.borderRadius,
       config.borderRadius,
     );
 
     const canvasEl = canvasRef.current;
 
-    setCssProperty(canvasEl, CANVAS_CSS_PROP_KEYS.scale, `${sanitizedScale}`);
-    setCssProperty(canvasEl, CANVAS_CSS_PROP_KEYS.blur, `${sanitizedBlur}px`);
+    setCssProperty(canvasEl, canvasCssPropKeys.scale, `${sanitizedScale}`);
+    setCssProperty(canvasEl, canvasCssPropKeys.blur, `${sanitizedBlur}px`);
+    setCssProperty(canvasEl, canvasCssPropKeys.opacity, `${sanitizedOpacity}`);
     setCssProperty(
       canvasEl,
-      CANVAS_CSS_PROP_KEYS.opacity,
-      `${sanitizedOpacity}`,
-    );
-    setCssProperty(
-      canvasEl,
-      CANVAS_CSS_PROP_KEYS.borderRadius,
+      canvasCssPropKeys.borderRadius,
       `${sanitizedRadius}px`,
     );
   }, [config, canvasRef]);

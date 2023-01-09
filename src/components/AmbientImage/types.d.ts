@@ -4,5 +4,6 @@ import type { AmbientCanvasProps } from '@/components/AmbientCanvas/types';
 
 export interface AmbientImageProps
   extends PropsWithChildren,
-    Omit<CanvasConfig, 'refreshRate'>,
-    Omit<AmbientCanvasProps, 'sourceRef'> {}
+    Omit<AmbientCanvasProps, 'sourceRef'> {
+  config?: Omit<CanvasConfig, 'frameRate'>;
+}

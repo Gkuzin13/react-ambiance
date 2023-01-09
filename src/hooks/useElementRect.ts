@@ -35,13 +35,13 @@ function useElementRect(ref: RefObject<Element>) {
     resizeObserver.observe(ref.current);
   }
 
-  function stop() {
+  function unobserve() {
     if (!ref.current) return;
 
-    resizeObserver.disconnect();
+    resizeObserver.unobserve(ref.current);
   }
 
-  return { rect, observe, stop };
+  return { rect, observe, unobserve };
 }
 
 export default useElementRect;

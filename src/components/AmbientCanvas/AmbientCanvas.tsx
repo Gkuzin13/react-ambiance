@@ -1,7 +1,7 @@
-import { useCallback, useLayoutEffect, useRef } from 'react';
+import { useLayoutEffect, useRef } from 'react';
 import useAmbientConfig from '@/hooks/useAmbientConfig';
 import useElementRect from '@/hooks/useElementRect';
-import useInterval from '@/hooks/useInterval';
+import animate from '@/methods/animate';
 import type { AmbientCanvasProps } from './types';
 
 function AmbientCanvas({
@@ -9,58 +9,74 @@ function AmbientCanvas({
   watchSourceResize,
   config,
 }: AmbientCanvasProps) {
+  const { rect, observe, unobserve } = useElementRect(sourceRef);
+
   const canvasRef = useRef(null);
 
-  const { rect, observe, stop } = useElementRect(sourceRef);
-
-  const drawCanvasImageFromSource = useCallback(
-    (
+  useLayoutEffect(() => {
+    function drawCanvasImageFromSource(
       canvasElement: HTMLCanvasElement | null,
       sourceElement: HTMLImageElement | HTMLVideoElement | null,
       width: number,
       height: number,
-    ) => {
+    ) {
       if (!canvasElement || !sourceElement) return;
+      const ctx = canvasElement.getContext('2d', { alpha: false });
 
-      const ctx = canvasElement.getContext('2d');
-      ctx?.drawImage(sourceElement, 0, 0, width, height);
-    },
-    [],
-  );
+      if (!ctx) return;
 
-  useInterval(
-    () =>
-      drawCanvasImageFromSource(
-        canvasRef.current,
-        sourceRef.current,
-        rect.width,
-        rect.height,
-      ),
-    config.refreshRate ? config.refreshRate : null,
-  );
+      if (config.frameRate) {
+        ctx.save();
+      }
 
-  useLayoutEffect(() => {
-    if (!sourceRef?.current || !canvasRef?.current) return;
+      if (config.fadeDelay && config.fadeDelay < 1) {
+        ctx.globalAlpha = config.fadeDelay;
+      }
+
+      ctx.drawImage(sourceElement, 0, 0, width, height);
+      console.log('drawing');
+      if (config.frameRate) {
+        ctx.restore();
+      }
+    }
+
+    const { start, stop } = animate(
+      () => {
+        drawCanvasImageFromSource(
+          canvasRef.current,
+          sourceRef.current,
+          rect.width,
+          rect.height,
+        );
+      },
+      config.frameRate ? config.frameRate : 0,
+    );
+
+    drawCanvasImageFromSource(
+      canvasRef.current,
+      sourceRef.current,
+      rect.width,
+      rect.height,
+    );
 
     if (watchSourceResize) {
       observe();
     }
 
-    if (!config?.refreshRate) {
-      drawCanvasImageFromSource(
-        canvasRef.current,
-        sourceRef.current,
-        rect.width,
-        rect.height,
-      );
+    if (!config.frameRate) {
+      stop();
+    } else {
+      start();
     }
 
     return () => {
+      stop();
+
       if (watchSourceResize) {
-        stop();
+        unobserve();
       }
     };
-  }, [canvasRef.current, sourceRef.current, rect.width, rect.height]);
+  }, [watchSourceResize, config, rect.width, rect.height, animate]);
 
   useAmbientConfig({ config, canvasRef });
 

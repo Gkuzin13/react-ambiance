@@ -1,73 +1,58 @@
-export type CanvasConfigKey =
-  | 'scale'
-  | 'blur'
-  | 'opacity'
-  | 'borderRadius'
-  | 'refreshRate';
-
-export type CanvasConfig = {
-  [K in CanvasConfigKey]?: number;
-};
-
-export type CanvasCssPropKey = {
-  readonly [K in Exclude<CanvasConfigKey, 'refreshRate'>]: string;
-};
-
-export type CanvasConfigValue = {
-  min: number;
-  max: number;
-  default: number;
-};
-
-export type CanvasConfigValues = {
-  [K in CanvasConfigKey]: CanvasConfigValue;
-};
-
-export type CanvasConfigDefaults = {
-  [K in CanvasConfigKey]?: number;
-};
-
-export const CANVAS_CSS_PROP_KEYS: CanvasCssPropKey = Object.freeze({
+export const canvasCssPropKeys = Object.freeze({
   scale: 'canvas-scale',
   blur: 'canvas-blur',
   opacity: 'canvas-opacity',
   borderRadius: 'canvas-radius',
 });
 
-export const CANVAS_CONFIG_VALUES: CanvasConfigValues = Object.freeze({
+export const canvasConfigValues = Object.freeze({
   scale: {
     min: 1,
-    max: 1.1,
+    max: 1.5,
     default: 1,
   },
   blur: {
     min: 10,
-    max: 50,
-    default: 30,
+    max: 100,
+    default: 50,
   },
   opacity: {
-    min: 0.5,
+    min: 0.75,
     max: 1,
-    default: 0.5,
+    default: 0.35,
   },
   borderRadius: {
     min: 0,
     max: 24,
     default: 16,
   },
-  refreshRate: {
-    min: 24,
-    max: 200,
-    default: 150,
+  frameRate: {
+    min: 1,
+    max: 60,
+    default: 15,
+  },
+  fadeDelay: {
+    min: 0.075,
+    max: 1,
+    default: 0.1,
   },
 });
 
-export const CANVAS_CONFIG_DEFAULTS = (omit?: CanvasConfigKey[]) => {
-  return Object.entries(CANVAS_CONFIG_VALUES).reduce(
-    (acc: CanvasConfigDefaults, [key, value]) => {
+export type CanvasConfigKey = keyof typeof canvasConfigValues;
+
+export type CanvasConfig = {
+  [K in CanvasConfigKey]?: number;
+};
+
+export type CanvasConfigValue =
+  typeof canvasConfigValues[keyof typeof canvasConfigValues];
+
+export const canvasDefaultConfigGenerator = (omit?: CanvasConfigKey[]) => {
+  return Object.entries(canvasConfigValues).reduce(
+    (acc: CanvasConfig, [key, value]) => {
       if (omit?.includes(key as CanvasConfigKey)) return acc;
 
-      acc[key as keyof CanvasConfig] = value.default;
+      acc[key as CanvasConfigKey] = value.default;
 
       return acc;
     },

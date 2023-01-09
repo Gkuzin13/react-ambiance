@@ -27,11 +27,21 @@
   filter: blur(var(--canvas-blur, 30px));
   opacity: var(--canvas-opacity, 0.5);
   z-index: -1;
+  animation: fade 0.5s ease-in-out;
+}
+
+@keyframes fade {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: var(--canvas-opacity);
+  }
 }
 
 img,
 video {
   position: relative;
   display: block;
-  width: 80vw;
+  /* opacity: 0; */
 }
