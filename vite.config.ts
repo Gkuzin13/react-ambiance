@@ -7,7 +7,9 @@ import linaria from '@linaria/vite';
 
 export default defineConfig({
   test: {
-    environment: 'happy-dom',
+    globals: true,
+    environment: 'jsdom',
+    setupFiles: './src/tests/setup.ts',
   },
   resolve: {
     alias: [

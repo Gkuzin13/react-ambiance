@@ -1,9 +1,9 @@
 import { useLayoutEffect, useRef } from 'react';
-import useElementRect from '@/hooks/useElementRect';
-import animate from '@/methods/animate';
+import useElementRect from '@/hooks/useElementRect/useElementRect';
+import animate from '@/utils/animate/animate';
 import { canvas, canvasFadeAnim } from './styles.css';
 import { canvasConfigValues, canvasCssPropKeys } from '@/constants/canvas';
-import { sanitizeValue } from '@/utils/number';
+import { sanitizeValue } from '@/utils/sanitize-config/sanitize-value';
 import type { AmbientCanvasProps } from './types';
 
 function AmbientCanvas({

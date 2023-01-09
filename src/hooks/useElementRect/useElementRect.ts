@@ -1,5 +1,4 @@
 import { useLayoutEffect, useState } from 'react';
-import type { RefObject } from 'react';
 
 export type ElementRectValue = Omit<DOMRect, 'toJSON'>;
 
@@ -14,31 +13,31 @@ const defaultRect: ElementRectValue = {
   right: 0,
 };
 
-function useElementRect(ref: RefObject<Element>) {
+function useElementRect(element: Element | null) {
   const [rect, setRect] = useState<ElementRectValue>(defaultRect);
 
   useLayoutEffect(() => {
-    if (!ref.current) return;
+    if (!element) return;
 
-    setRect(ref.current.getBoundingClientRect());
+    setRect(element.getBoundingClientRect());
 
     return () => setRect(defaultRect);
-  }, [ref.current]);
+  }, [element]);
 
   const resizeObserver = new ResizeObserver((entries) => {
     setRect(() => entries[0].contentRect);
   });
 
   function observe() {
-    if (!ref.current) return;
+    if (!element) return;
 
-    resizeObserver.observe(ref.current);
+    resizeObserver.observe(element);
   }
 
   function unobserve() {
-    if (!ref.current) return;
+    if (!element) return;
 
-    resizeObserver.unobserve(ref.current);
+    resizeObserver.unobserve(element);
   }
 
   return { rect, observe, unobserve };

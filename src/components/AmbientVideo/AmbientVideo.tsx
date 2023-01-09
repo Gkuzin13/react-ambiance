@@ -1,8 +1,8 @@
 import { useState } from 'react';
 import CanvasContainer from '@/components/AmbientContainer/AmbientContainer';
 import AmbientCanvas from '../AmbientCanvas/AmbientCanvas';
-import useSource from '@/hooks/useSource';
-import { traverseAndPassPropsByElementType } from '@/methods/dom';
+import useSource from '@/hooks/useSource/useSource';
+import { traverseAndPassPropsByElementType } from '@/utils/traverse-dom/traverse-dom';
 import { canvasDefaultConfigGenerator } from '@/constants/canvas';
 import type { AmbientVideoProps } from './types';
 

@@ -1,7 +1,7 @@
-import { traverseAndPassPropsByElementType } from '@/methods/dom';
+import { traverseAndPassPropsByElementType } from '@/utils/traverse-dom/traverse-dom';
 import AmbientContainer from '@/components/AmbientContainer/AmbientContainer';
 import AmbientCanvas from '@/components/AmbientCanvas/AmbientCanvas';
-import useSource from '@/hooks/useSource';
+import useSource from '@/hooks/useSource/useSource';
 import { canvasDefaultConfigGenerator } from '@/constants/canvas';
 import type { AmbientImageProps } from './types';
 

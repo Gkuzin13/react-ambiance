@@ -1,6 +1,6 @@
 import { CanvasConfigValue } from '@/constants/canvas';
 import { describe, expect, it } from 'vitest';
-import { sanitizeValue } from '@/utils/number';
+import { sanitizeValue } from '@/utils/sanitize-config/sanitize-value';
 
 describe('sanitizeValue', () => {
   const testConfig: CanvasConfigValue = {
