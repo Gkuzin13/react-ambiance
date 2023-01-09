@@ -8,8 +8,8 @@ import type { AmbientCanvasProps } from './types';
 
 function AmbientCanvas({
   sourceRef,
-  watchSourceResize,
   config,
+  watchSourceResize = false,
 }: AmbientCanvasProps) {
   const { rect, observe, unobserve } = useElementRect(sourceRef);
 
@@ -39,8 +39,6 @@ function AmbientCanvas({
 
       ctx.drawImage(sourceElement, 0, 0, width, height);
 
-      console.log('drawing');
-
       if (frameRate) {
         ctx.restore();
       }
@@ -56,6 +54,13 @@ function AmbientCanvas({
       config.initialFrameAlpha,
     );
 
+    drawCanvasImageFromSource(
+      canvasRef.current,
+      sourceRef.current,
+      rect.width,
+      rect.height,
+    );
+
     const { start, stop } = animate(
       () => {
         drawCanvasImageFromSource(
@@ -68,13 +73,6 @@ function AmbientCanvas({
         );
       },
       sanitizedFrameRate ? sanitizedFrameRate : 0,
-    );
-
-    drawCanvasImageFromSource(
-      canvasRef.current,
-      sourceRef.current,
-      rect.width,
-      rect.height,
     );
 
     if (watchSourceResize) {

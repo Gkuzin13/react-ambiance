@@ -1,4 +1,4 @@
-import { container } from './styes.css';
+import { container } from './styles.css';
 import type { PropsWithChildren } from 'react';
 
 function CanvasContainer({ children }: PropsWithChildren) {

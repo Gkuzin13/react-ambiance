@@ -8,11 +8,11 @@ import {
 } from '@/constants/canvas';
 
 function App() {
-  const [settings, setSettings] = useState(canvasDefaultConfigGenerator());
+  const [config, setConfig] = useState(canvasDefaultConfigGenerator());
 
   return (
     <div className="App">
-      <AmbientVideo config={{ ...settings }} watchSourceResize>
+      <AmbientVideo config={config} watchSourceResize>
         <video
           muted
           controls
@@ -23,9 +23,9 @@ function App() {
           src="http://commondatastorage.googleapis.com/gtv-videos-bucket/sample/BigBuckBunny.mp4"
         ></video>
       </AmbientVideo>
-      {/* {[...Array(5).keys()].map((key) => {
+      {[...Array(1).keys()].map((key) => {
         return (
-          <AmbientImage key={key} watchSourceResize config={settings}>
+          <AmbientImage key={key} config={config}>
             <div>
               <img
                 src={`https://loremflickr.com/300/200?random=${key}`}
@@ -34,7 +34,7 @@ function App() {
             </div>
           </AmbientImage>
         );
-      })} */}
+      })}
       <div style={{ color: 'white' }}>
         {Object.entries(canvasConfigValues).map(([key, value]) => {
           return (
@@ -48,7 +48,7 @@ function App() {
                 step={0.01}
                 defaultValue={value.default}
                 onChange={(e) =>
-                  setSettings({ ...settings, [key]: +e.target.value })
+                  setConfig({ ...config, [key]: +e.target.value })
                 }
               />
             </div>

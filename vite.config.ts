@@ -18,12 +18,16 @@ export default defineConfig({
     ],
   },
   plugins: [
-    react(),
     linaria({
       include: ['**/*.{ts,tsx}'],
       babelOptions: {
-        presets: ['@babel/preset-typescript', '@babel/preset-react'],
+        presets: [
+          '@babel/preset-typescript',
+          '@babel/preset-react',
+          '@babel/preset-env',
+        ],
       },
     }),
+    react(),
   ],
 });

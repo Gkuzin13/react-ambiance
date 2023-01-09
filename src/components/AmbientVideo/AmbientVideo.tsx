@@ -23,8 +23,6 @@ function AmbientVideo({
     ref: sourceRef,
   };
 
-  console.log(config);
-
   return (
     <CanvasContainer>
       {traverseAndPassPropsByElementType(children, 'video', {

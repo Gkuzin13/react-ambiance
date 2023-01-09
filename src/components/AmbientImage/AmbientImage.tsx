@@ -26,7 +26,7 @@ function AmbientImage({
         <AmbientCanvas
           sourceRef={sourceRef}
           watchSourceResize={watchSourceResize}
-          config={{ ...config, initialFrameAlpha: 1 }}
+          config={{ ...config, frameRate: 0, initialFrameAlpha: 1 }}
         />
       )}
     </AmbientContainer>
