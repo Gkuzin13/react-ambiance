@@ -6,7 +6,7 @@ import { canvasDefaultConfigGenerator } from '@/constants/canvas';
 import type { AmbientImageProps } from './types';
 
 function AmbientImage({
-  config = canvasDefaultConfigGenerator(['frameRate']),
+  config = canvasDefaultConfigGenerator(['frameRate', 'fadeDelay']),
   watchSourceResize,
   children,
 }: AmbientImageProps) {
