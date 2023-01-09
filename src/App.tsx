@@ -23,7 +23,7 @@ function App() {
           src="http://commondatastorage.googleapis.com/gtv-videos-bucket/sample/BigBuckBunny.mp4"
         ></video>
       </AmbientVideo>
-      {[...Array(1).keys()].map((key) => {
+      {/* {[...Array(5).keys()].map((key) => {
         return (
           <AmbientImage key={key} watchSourceResize config={settings}>
             <div>
@@ -34,7 +34,7 @@ function App() {
             </div>
           </AmbientImage>
         );
-      })}
+      })} */}
       <div style={{ color: 'white' }}>
         {Object.entries(canvasConfigValues).map(([key, value]) => {
           return (

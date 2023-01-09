@@ -10,3 +10,7 @@
   flex-direction: column;
   gap: 4rem;
 }
+
+video {
+  opacity: 0;
+}

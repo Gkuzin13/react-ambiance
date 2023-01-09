@@ -6,7 +6,7 @@ import { canvasDefaultConfigGenerator } from '@/constants/canvas';
 import type { AmbientImageProps } from './types';
 
 function AmbientImage({
-  config = canvasDefaultConfigGenerator(['frameRate', 'fadeDelay']),
+  config = canvasDefaultConfigGenerator(['frameRate', 'initialFrameAlpha']),
   watchSourceResize,
   children,
 }: AmbientImageProps) {
@@ -26,7 +26,7 @@ function AmbientImage({
         <AmbientCanvas
           sourceRef={sourceRef}
           watchSourceResize={watchSourceResize}
-          config={{ ...config, fadeDelay: 1 }}
+          config={{ ...config, initialFrameAlpha: 1 }}
         />
       )}
     </AmbientContainer>

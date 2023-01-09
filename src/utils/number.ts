@@ -1,12 +1,9 @@
 import { CanvasConfigValue } from '@/constants/canvas';
 
-export const sanitizeAmbientConfigValue = (
-  range: CanvasConfigValue,
-  value?: number,
-) => {
-  if (value === undefined || value === null) return range.default;
-  if (value < range.min) return range.min;
-  if (value > range.max) return range.max;
+export const sanitizeValue = (config: CanvasConfigValue, value?: number) => {
+  if (value === undefined || value === null) return config.default;
+  if (value < config.min) return config.min;
+  if (value > config.max) return config.max;
 
   return value;
 };

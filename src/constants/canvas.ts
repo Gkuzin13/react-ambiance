@@ -27,14 +27,19 @@ export const canvasConfigValues = Object.freeze({
     default: 16,
   },
   frameRate: {
-    min: 1,
+    min: 0,
     max: 60,
     default: 15,
   },
-  fadeDelay: {
-    min: 0.075,
+  initialFrameAlpha: {
+    min: 0.05,
     max: 1,
     default: 0.1,
+  },
+  appear: {
+    min: 0,
+    max: 1,
+    default: 1,
   },
 });
 

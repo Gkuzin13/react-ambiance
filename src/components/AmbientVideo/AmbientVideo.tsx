@@ -7,7 +7,7 @@ import { canvasDefaultConfigGenerator } from '@/constants/canvas';
 import type { AmbientVideoProps } from './types';
 
 function AmbientVideo({
-  config = canvasDefaultConfigGenerator(),
+  config = canvasDefaultConfigGenerator(['appear']),
   watchSourceResize,
   children,
 }: AmbientVideoProps) {
@@ -22,6 +22,8 @@ function AmbientVideo({
     onPause: () => setPlaying(false),
     ref: sourceRef,
   };
+
+  console.log(config);
 
   return (
     <CanvasContainer>

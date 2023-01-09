@@ -1,8 +1,9 @@
 import { useLayoutEffect, useRef } from 'react';
 import useElementRect from '@/hooks/useElementRect';
 import animate from '@/methods/animate';
-import { canvas } from './styles.css';
-import { canvasCssPropKeys } from '@/constants/canvas';
+import { canvas, canvasFadeAnim } from './styles.css';
+import { canvasConfigValues, canvasCssPropKeys } from '@/constants/canvas';
+import { sanitizeValue } from '@/utils/number';
 import type { AmbientCanvasProps } from './types';
 
 function AmbientCanvas({
@@ -20,26 +21,40 @@ function AmbientCanvas({
       sourceElement: HTMLImageElement | HTMLVideoElement | null,
       width: number,
       height: number,
+      frameRate?: number,
+      initialFrameAlpha?: number,
     ) {
       if (!canvasElement || !sourceElement) return;
       const ctx = canvasElement.getContext('2d', { alpha: false });
 
       if (!ctx) return;
 
-      if (config.frameRate) {
+      if (frameRate) {
         ctx.save();
       }
 
-      if (config.fadeDelay && config.fadeDelay < 1) {
-        ctx.globalAlpha = config.fadeDelay;
+      if (initialFrameAlpha && frameRate) {
+        ctx.globalAlpha = initialFrameAlpha;
       }
 
       ctx.drawImage(sourceElement, 0, 0, width, height);
+
       console.log('drawing');
-      if (config.frameRate) {
+
+      if (frameRate) {
         ctx.restore();
       }
     }
+
+    const sanitizedFrameRate = sanitizeValue(
+      canvasConfigValues.frameRate,
+      config.frameRate,
+    );
+
+    const sanitizedInitialFrameAlpha = sanitizeValue(
+      canvasConfigValues.initialFrameAlpha,
+      config.initialFrameAlpha,
+    );
 
     const { start, stop } = animate(
       () => {
@@ -48,9 +63,11 @@ function AmbientCanvas({
           sourceRef.current,
           rect.width,
           rect.height,
+          sanitizedFrameRate,
+          sanitizedInitialFrameAlpha,
         );
       },
-      config.frameRate ? config.frameRate : 0,
+      sanitizedFrameRate ? sanitizedFrameRate : 0,
     );
 
     drawCanvasImageFromSource(
@@ -80,23 +97,37 @@ function AmbientCanvas({
   }, [
     watchSourceResize,
     config.frameRate,
-    config.fadeDelay,
+    config.initialFrameAlpha,
     rect.width,
     rect.height,
     animate,
   ]);
+
+  const sanitizedBlur = sanitizeValue(canvasConfigValues.blur, config.blur);
+
+  const sanitizedRadius = sanitizeValue(
+    canvasConfigValues.borderRadius,
+    config.borderRadius,
+  );
+
+  const sanitizedOpacity = sanitizeValue(
+    canvasConfigValues.opacity,
+    config.opacity,
+  );
+
+  const sanitizedScale = sanitizeValue(canvasConfigValues.scale, config.scale);
 
   return (
     <canvas
       ref={canvasRef}
       width={rect.width}
       height={rect.height}
-      className={canvas}
+      className={`${canvas} ${config.appear && canvasFadeAnim}`}
       style={{
-        [`${canvasCssPropKeys.blur}`]: `${config.blur}px`,
-        [`${canvasCssPropKeys.borderRadius}`]: `${config.borderRadius}px`,
-        [`${canvasCssPropKeys.opacity}`]: config.opacity,
-        [`${canvasCssPropKeys.scale}`]: config.scale,
+        [`${canvasCssPropKeys.blur}`]: `${sanitizedBlur}px`,
+        [`${canvasCssPropKeys.borderRadius}`]: `${sanitizedRadius}px`,
+        [`${canvasCssPropKeys.opacity}`]: sanitizedOpacity,
+        [`${canvasCssPropKeys.scale}`]: sanitizedScale,
       }}
     />
   );

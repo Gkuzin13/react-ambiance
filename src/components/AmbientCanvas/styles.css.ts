@@ -13,9 +13,12 @@ const canvas = css`
   );
   transform: translate(-50%, -50%)
     scale(var(${canvasCssPropKeys.scale}, ${scale.default}));
-  filter: blur(var(${canvasCssPropKeys.blur}, ${blur.default}px));
-  opacity: var(${canvasCssPropKeys.opacity}, ${opacity.default});
+  /* filter: blur(var(${canvasCssPropKeys.blur}, ${blur.default}px));
+  opacity: var(${canvasCssPropKeys.opacity}, ${opacity.default}); */
   z-index: -1;
+`;
+
+const canvasFadeAnim = css`
   animation: fade 0.5s cubic-bezier(0.6, 0.04, 0.98, 0.335);
 
   @keyframes fade {
@@ -28,4 +31,4 @@ const canvas = css`
   }
 `;
 
-export { canvas };
+export { canvas, canvasFadeAnim };
