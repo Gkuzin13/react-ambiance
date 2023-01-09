@@ -13,8 +13,8 @@ const canvas = css`
   );
   transform: translate(-50%, -50%)
     scale(var(${canvasCssPropKeys.scale}, ${scale.default}));
-  /* filter: blur(var(${canvasCssPropKeys.blur}, ${blur.default}px));
-  opacity: var(${canvasCssPropKeys.opacity}, ${opacity.default}); */
+  filter: blur(var(${canvasCssPropKeys.blur}, ${blur.default}px));
+  opacity: var(${canvasCssPropKeys.opacity}, ${opacity.default});
   z-index: -1;
 `;
 
