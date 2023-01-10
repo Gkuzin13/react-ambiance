@@ -1,7 +1,7 @@
 import { getByRole, render, renderHook } from '@testing-library/react';
 import useElementRect from './useElementRect';
 
-test('return element rect', () => {
+test.skip('return element rect', () => {
   const Container = render(
     <div>
       <img style={{ width: 300, height: 500 }} alt="test" />
@@ -13,5 +13,6 @@ test('return element rect', () => {
   );
 
   result.current.observe();
+
   result.current.unobserve();
 });

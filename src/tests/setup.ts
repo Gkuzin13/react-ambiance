@@ -6,8 +6,8 @@ expect.extend(matchers);
 
 const ResizeObserverMock = vi.fn(() => ({
   observe: (target: Element) => vi.fn(),
-  unobserve: (target: Element) => vi.fn(),
-  disconnect: () => vi.fn(),
+  unobserve: vi.fn(),
+  disconnect: (target: Element) => vi.fn(),
 }));
 
 vi.stubGlobal('ResizeObserver', ResizeObserverMock);

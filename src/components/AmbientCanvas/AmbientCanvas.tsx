@@ -11,7 +11,7 @@ function AmbientCanvas({
   config,
   watchSourceResize = false,
 }: AmbientCanvasProps) {
-  const { rect, observe, unobserve } = useElementRect(sourceRef);
+  const { rect, observe, unobserve } = useElementRect(sourceRef.current);
 
   const canvasRef = useRef(null);
 

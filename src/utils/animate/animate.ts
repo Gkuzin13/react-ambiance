@@ -10,13 +10,11 @@ function animate(callback: () => void, frameRate = 24) {
       requestId = requestAnimationFrame(animateLoop);
 
       const delta = now - then;
-
       if (delta >= interval - tolerance) {
         then = now - (delta % interval);
         callback();
       }
     };
-
     requestId = requestAnimationFrame(animateLoop);
   }
 
