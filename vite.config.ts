@@ -3,7 +3,6 @@
 import { defineConfig } from 'vite';
 import { resolve } from 'path';
 import react from '@vitejs/plugin-react';
-import linaria from '@linaria/vite';
 
 export default defineConfig({
   test: {
@@ -24,17 +23,5 @@ export default defineConfig({
       },
     ],
   },
-  plugins: [
-    linaria({
-      include: ['**/*.{ts,tsx}'],
-      babelOptions: {
-        presets: [
-          '@babel/preset-typescript',
-          '@babel/preset-react',
-          '@babel/preset-env',
-        ],
-      },
-    }),
-    react(),
-  ],
+  plugins: [react()],
 });
