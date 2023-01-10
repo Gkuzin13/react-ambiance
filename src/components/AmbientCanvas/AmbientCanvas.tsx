@@ -1,9 +1,9 @@
 import { useLayoutEffect, useRef } from 'react';
 import useElementRect from '@/hooks/useElementRect/useElementRect';
-import animate from '@/utils/animate/animate';
-import { canvas, canvasFadeAnim } from './styles.css';
-import { canvasConfigValues, canvasCssPropKeys } from '@/constants/canvas';
 import { sanitizeValue } from '@/utils/sanitize-config/sanitize-value';
+import animate from '@/utils/animate/animate';
+import { canvasConfigValues, canvasCssPropKeys } from '@/constants/canvas';
+import { canvas, canvasFadeAnim } from './styles.css';
 import type { AmbientCanvasProps } from './types';
 
 function AmbientCanvas({
@@ -127,6 +127,7 @@ function AmbientCanvas({
         [`${canvasCssPropKeys.opacity}`]: sanitizedOpacity,
         [`${canvasCssPropKeys.scale}`]: sanitizedScale,
       }}
+      data-testid="canvas-test"
     />
   );
 }

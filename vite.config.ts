@@ -9,7 +9,12 @@ export default defineConfig({
   test: {
     globals: true,
     environment: 'jsdom',
-    setupFiles: './src/tests/setup.ts',
+    environmentOptions: {
+      jsdom: {
+        resources: 'usable',
+      },
+    },
+    setupFiles: ['./src/tests/setup.ts', './src/tests/vitest-canvas-mock.ts'],
   },
   resolve: {
     alias: [
