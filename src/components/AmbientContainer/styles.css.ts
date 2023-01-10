@@ -1,6 +1,6 @@
-import { css } from '@linaria/core';
+import styled from 'styled-components';
 
-export const container = css`
+export const Container = styled.div`
   position: relative;
   display: grid;
   place-items: center;

@@ -1,34 +1,31 @@
-import { css } from '@linaria/core';
-import { canvasCssPropKeys, canvasConfigValues } from '@/constants/canvas';
+import styled from 'styled-components';
+import {
+  canvasCssPropKeys,
+  canvasConfigValues,
+  CanvasConfig,
+} from '@/constants/canvas';
 
-const { scale, blur, opacity, borderRadius } = canvasConfigValues;
-
-const canvas = css`
+const Canvas = styled.canvas<CanvasConfig>`
   position: absolute;
   top: 50%;
   left: 50%;
-  border-radius: var(
-    ${canvasCssPropKeys.borderRadius},
-    ${borderRadius.default}px
-  );
-  transform: translate(-50%, -50%)
-    scale(var(${canvasCssPropKeys.scale}, ${scale.default}));
-  filter: blur(var(${canvasCssPropKeys.blur}, ${blur.default}px));
-  opacity: var(${canvasCssPropKeys.opacity}, ${opacity.default});
+  border-radius: ${(props) => props.borderRadius}px;
+  transform: translate(-50%, -50%) scale(${(props) => props.scale});
+  filter: blur(${(props) => props.blur}px);
+  opacity: ${(props) => props.opacity};
   z-index: -1;
+  ${(props) =>
+    props.appear &&
+    `animation: fade 0.5s cubic-bezier(0.6, 0.04, 0.98, 0.335);
+
+    @keyframes fade {
+      from {
+        opacity: 0;
+      }
+      to {
+        opacity: var(${canvasCssPropKeys.opacity});
+      }
+    }`}
 `;
 
-const canvasFadeAnim = css`
-  animation: fade 0.5s cubic-bezier(0.6, 0.04, 0.98, 0.335);
-
-  @keyframes fade {
-    from {
-      opacity: 0;
-    }
-    to {
-      opacity: var(${canvasCssPropKeys.opacity});
-    }
-  }
-`;
-
-export { canvas, canvasFadeAnim };
+export { Canvas };

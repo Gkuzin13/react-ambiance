@@ -3,7 +3,7 @@ import useElementRect from '@/hooks/useElementRect/useElementRect';
 import { sanitizeValue } from '@/utils/sanitize-config/sanitize-value';
 import animate from '@/utils/animate/animate';
 import { canvasConfigValues, canvasCssPropKeys } from '@/constants/canvas';
-import { canvas, canvasFadeAnim } from './styles.css';
+import { Canvas } from './styles.css';
 import type { AmbientCanvasProps } from './types';
 
 function AmbientCanvas({
@@ -116,18 +116,15 @@ function AmbientCanvas({
   const sanitizedScale = sanitizeValue(canvasConfigValues.scale, config.scale);
 
   return (
-    <canvas
+    <Canvas
       ref={canvasRef}
       width={rect.width}
       height={rect.height}
-      className={`${canvas} ${config.appear && canvasFadeAnim}`}
-      style={{
-        [`${canvasCssPropKeys.blur}`]: `${sanitizedBlur}px`,
-        [`${canvasCssPropKeys.borderRadius}`]: `${sanitizedRadius}px`,
-        [`${canvasCssPropKeys.opacity}`]: sanitizedOpacity,
-        [`${canvasCssPropKeys.scale}`]: sanitizedScale,
-      }}
       data-testid="canvas-test"
+      borderRadius={sanitizedRadius}
+      blur={sanitizedBlur}
+      opacity={sanitizedOpacity}
+      scale={sanitizedScale}
     />
   );
 }
