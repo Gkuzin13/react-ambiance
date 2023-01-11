@@ -7,6 +7,13 @@ import type { AmbientVideoProps } from '@/components/AmbientVideo/types';
 export default {
   title: 'Ambient Video',
   component: AmbientVideo,
+  parameters: {
+    docs: {
+      description: {
+        component: 'Component that creates an ambiance around an video',
+      },
+    },
+  },
   argTypes: {
     watchSourceResize: {
       control: { type: 'boolean', default: true },

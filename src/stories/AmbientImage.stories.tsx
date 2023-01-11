@@ -13,6 +13,13 @@ const configValuesToOmit: CanvasConfigKey[] = [
 export default {
   title: 'Ambient Image',
   component: AmbientImage,
+  parameters: {
+    docs: {
+      description: {
+        component: 'Component that creates an ambiance around an image',
+      },
+    },
+  },
   argTypes: {
     watchSourceResize: {
       control: { type: 'boolean', default: true },
@@ -30,6 +37,6 @@ export const Default: ComponentStory<typeof AmbientImage> = ({
   ...rest
 }: AmbientImageProps) => (
   <AmbientImage config={rest} watchSourceResize={watchSourceResize}>
-    <img src="https://picsum.photos/200/300" alt="Default" />
+    <img src="https://picsum.photos/400/400" alt="Default" />
   </AmbientImage>
 );
