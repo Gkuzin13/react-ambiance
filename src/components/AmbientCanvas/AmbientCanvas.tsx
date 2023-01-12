@@ -1,16 +1,12 @@
 import { useLayoutEffect, useRef } from 'react';
 import useElementRect from '@/hooks/useElementRect/useElementRect';
-import { sanitizeValue } from '@/utils/sanitize-config/sanitize-value';
 import animate from '@/utils/animate/animate';
-import { canvasConfigValues, canvasCssPropKeys } from '@/constants/canvas';
+import { sanitizeValue } from '@/utils/sanitize-config/sanitize-value';
+import { canvasConfigDefaults } from '@/constants/canvas';
 import { Canvas } from './styles.css';
 import type { AmbientCanvasProps } from './types';
 
-function AmbientCanvas({
-  sourceRef,
-  config,
-  watchSourceResize = false,
-}: AmbientCanvasProps) {
+function AmbientCanvas({ sourceRef, ...config }: AmbientCanvasProps) {
   const { rect, observe, unobserve } = useElementRect(sourceRef.current);
 
   const canvasRef = useRef(null);
@@ -45,12 +41,12 @@ function AmbientCanvas({
     }
 
     const sanitizedFrameRate = sanitizeValue(
-      canvasConfigValues.frameRate,
+      canvasConfigDefaults.frameRate,
       config.frameRate,
     );
 
     const sanitizedInitialFrameAlpha = sanitizeValue(
-      canvasConfigValues.initialFrameAlpha,
+      canvasConfigDefaults.initialFrameAlpha,
       config.initialFrameAlpha,
     );
 
@@ -75,7 +71,7 @@ function AmbientCanvas({
       sanitizedFrameRate ? sanitizedFrameRate : 0,
     );
 
-    if (watchSourceResize) {
+    if (config.watchSourceResize) {
       observe();
     }
 
@@ -88,12 +84,12 @@ function AmbientCanvas({
     return () => {
       stop();
 
-      if (watchSourceResize) {
+      if (config.watchSourceResize) {
         unobserve();
       }
     };
   }, [
-    watchSourceResize,
+    config.watchSourceResize,
     config.frameRate,
     config.initialFrameAlpha,
     rect.width,
@@ -101,19 +97,22 @@ function AmbientCanvas({
     animate,
   ]);
 
-  const sanitizedBlur = sanitizeValue(canvasConfigValues.blur, config.blur);
+  const sanitizedBlur = sanitizeValue(canvasConfigDefaults.blur, config.blur);
 
   const sanitizedRadius = sanitizeValue(
-    canvasConfigValues.borderRadius,
+    canvasConfigDefaults.borderRadius,
     config.borderRadius,
   );
 
   const sanitizedOpacity = sanitizeValue(
-    canvasConfigValues.opacity,
+    canvasConfigDefaults.opacity,
     config.opacity,
   );
 
-  const sanitizedScale = sanitizeValue(canvasConfigValues.scale, config.scale);
+  const sanitizedScale = sanitizeValue(
+    canvasConfigDefaults.scale,
+    config.scale,
+  );
 
   return (
     <Canvas

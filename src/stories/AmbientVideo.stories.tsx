@@ -1,8 +1,12 @@
 import AmbientVideo from '@/components/AmbientVideo/AmbientVideo';
-import { canvasDefaultConfigGenerator } from '@/constants/canvas';
+import {
+  CanvasConfigKey,
+  canvasDefaultConfigGenerator,
+} from '@/constants/canvas';
 import { generateStoryArgTypes } from './utils';
 import type { ComponentStory, ComponentMeta } from '@storybook/react';
-import type { AmbientVideoProps } from '@/components/AmbientVideo/types';
+
+const configValuesToOmit: CanvasConfigKey[] = ['appear'];
 
 export default {
   title: 'Ambient Video',
@@ -14,23 +18,12 @@ export default {
       },
     },
   },
-  argTypes: {
-    watchSourceResize: {
-      control: { type: 'boolean', default: true },
-    },
-    ...generateStoryArgTypes(),
-  },
-  args: {
-    ...canvasDefaultConfigGenerator(),
-    watchSourceResize: true,
-  },
+  argTypes: generateStoryArgTypes(configValuesToOmit),
+  args: canvasDefaultConfigGenerator(configValuesToOmit),
 } as ComponentMeta<typeof AmbientVideo>;
 
-export const Default: ComponentStory<typeof AmbientVideo> = ({
-  watchSourceResize,
-  ...rest
-}: AmbientVideoProps) => (
-  <AmbientVideo config={rest} watchSourceResize={watchSourceResize}>
+export const Default: ComponentStory<typeof AmbientVideo> = (args) => (
+  <AmbientVideo {...args}>
     <video
       muted
       controls
@@ -39,6 +32,6 @@ export const Default: ComponentStory<typeof AmbientVideo> = ({
       loop
       autoPlay
       src="http://commondatastorage.googleapis.com/gtv-videos-bucket/sample/BigBuckBunny.mp4"
-    ></video>{' '}
+    />
   </AmbientVideo>
 );

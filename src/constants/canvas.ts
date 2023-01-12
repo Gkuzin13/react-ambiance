@@ -1,11 +1,27 @@
-export const canvasCssPropKeys = Object.freeze({
-  scale: '--ambient-scale',
-  blur: '--ambient-blur',
-  opacity: '--ambient-opacity',
-  borderRadius: '--ambient-radius',
-} as const);
+export type CanvasConfig = {
+  scale?: number;
+  blur?: number;
+  opacity?: number;
+  borderRadius?: number;
+  frameRate?: number;
+  initialFrameAlpha?: number;
+  appear?: boolean;
+  watchSourceResize?: boolean;
+};
 
-export const canvasConfigValues = Object.freeze({
+export type CanvasConfigKey = keyof CanvasConfig;
+
+export type CanvasConfigDefaultValue = {
+  min?: number;
+  max?: number;
+  default: boolean | number;
+};
+
+export type CanvasConfigDefaults = {
+  [K in CanvasConfigKey]?: CanvasConfigDefaultValue;
+};
+
+export const canvasConfigDefaults: CanvasConfigDefaults = Object.freeze({
   scale: {
     min: 1,
     max: 1.5,
@@ -37,27 +53,19 @@ export const canvasConfigValues = Object.freeze({
     default: 0.1,
   },
   appear: {
-    min: 0,
-    max: 1,
-    default: 1,
+    default: true,
+  },
+  watchSourceResize: {
+    default: false,
   },
 });
 
-export type CanvasConfigKey = keyof typeof canvasConfigValues;
-
-export type CanvasConfig = {
-  [K in CanvasConfigKey]?: number;
-};
-
-export type CanvasConfigValue =
-  typeof canvasConfigValues[keyof typeof canvasConfigValues];
-
 export const canvasDefaultConfigGenerator = (omit?: CanvasConfigKey[]) => {
-  return Object.entries(canvasConfigValues).reduce(
+  return Object.entries(canvasConfigDefaults).reduce(
     (acc: CanvasConfig, [key, value]) => {
       if (omit?.includes(key as CanvasConfigKey)) return acc;
 
-      acc[key as CanvasConfigKey] = value.default;
+      acc[key as CanvasConfigKey] = value.default as any;
 
       return acc;
     },

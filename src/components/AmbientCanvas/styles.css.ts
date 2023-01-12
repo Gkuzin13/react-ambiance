@@ -1,9 +1,5 @@
 import styled from 'styled-components';
-import {
-  canvasCssPropKeys,
-  canvasConfigValues,
-  CanvasConfig,
-} from '@/constants/canvas';
+import { CanvasConfig } from '@/constants/canvas';
 
 const Canvas = styled.canvas<CanvasConfig>`
   position: absolute;
@@ -23,7 +19,7 @@ const Canvas = styled.canvas<CanvasConfig>`
         opacity: 0;
       }
       to {
-        opacity: var(${canvasCssPropKeys.opacity});
+        opacity: ${(props: any) => props.opacity};
       }
     }`}
 `;

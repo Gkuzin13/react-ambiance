@@ -1,16 +1,12 @@
 import { useState } from 'react';
 import CanvasContainer from '@/components/AmbientContainer/AmbientContainer';
-import AmbientCanvas from '../AmbientCanvas/AmbientCanvas';
+import AmbientCanvas from '@/components/AmbientCanvas/AmbientCanvas';
 import useSource from '@/hooks/useSource/useSource';
 import { traverseAndPassPropsByElementType } from '@/utils/traverse-dom/traverse-dom';
 import { canvasDefaultConfigGenerator } from '@/constants/canvas';
 import type { AmbientVideoProps } from './types';
 
-function AmbientVideo({
-  config = canvasDefaultConfigGenerator(['appear']),
-  watchSourceResize,
-  children,
-}: AmbientVideoProps) {
+const AmbientVideo = ({ children, ...restProps }: AmbientVideoProps) => {
   const [playing, setPlaying] = useState(false);
 
   const { sourceRef, sourceReady, setSourceReady } = useSource();
@@ -23,6 +19,8 @@ function AmbientVideo({
     ref: sourceRef,
   };
 
+  console.log(restProps);
+
   return (
     <CanvasContainer>
       {traverseAndPassPropsByElementType(children, 'video', {
@@ -31,15 +29,14 @@ function AmbientVideo({
       {sourceReady && (
         <AmbientCanvas
           sourceRef={sourceRef}
-          watchSourceResize={watchSourceResize}
-          config={{
-            ...config,
-            frameRate: playing ? config.frameRate : 0,
-          }}
+          {...restProps}
+          frameRate={playing ? restProps.frameRate : 0}
         />
       )}
     </CanvasContainer>
   );
-}
+};
+
+AmbientVideo.defaultProps = canvasDefaultConfigGenerator(['appear']);
 
 export default AmbientVideo;

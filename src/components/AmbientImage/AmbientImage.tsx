@@ -5,11 +5,7 @@ import useSource from '@/hooks/useSource/useSource';
 import { canvasDefaultConfigGenerator } from '@/constants/canvas';
 import type { AmbientImageProps } from './types';
 
-function AmbientImage({
-  config = canvasDefaultConfigGenerator(['frameRate', 'initialFrameAlpha']),
-  watchSourceResize,
-  children,
-}: AmbientImageProps) {
+const AmbientImage = ({ children, ...restProps }: AmbientImageProps) => {
   const { sourceRef, sourceReady, setSourceReady } = useSource();
 
   const imgElementProps = {
@@ -25,12 +21,18 @@ function AmbientImage({
       {sourceReady && (
         <AmbientCanvas
           sourceRef={sourceRef}
-          watchSourceResize={watchSourceResize}
-          config={{ ...config, frameRate: 0, initialFrameAlpha: 1 }}
+          {...restProps}
+          frameRate={0}
+          initialFrameAlpha={1}
         />
       )}
     </AmbientContainer>
   );
-}
+};
+
+AmbientImage.defaultProps = canvasDefaultConfigGenerator([
+  'frameRate',
+  'initialFrameAlpha',
+]);
 
 export default AmbientImage;

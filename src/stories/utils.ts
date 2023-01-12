@@ -1,8 +1,16 @@
-import { CanvasConfigKey, canvasConfigValues } from '@/constants/canvas';
+import { canvasConfigDefaults, CanvasConfigKey } from '@/constants/canvas';
+import { isNumber, isBoolean } from '@/utils/is/is';
 
 type StoryDocs = {
   [K in CanvasConfigKey]?: {
     description: string;
+    control?: {
+      type: 'boolean' | 'range';
+      min?: number;
+      max?: number;
+      step?: number;
+      default: any;
+    };
   };
 };
 
@@ -30,19 +38,30 @@ const storyDocs: StoryDocs = {
   appear: {
     description: 'Apply a transition on the initial render',
   },
+  watchSourceResize: {
+    description: 'Watch source resize',
+  },
 };
 
 export function generateStoryArgTypes(omit?: CanvasConfigKey[]) {
-  return Object.entries(canvasConfigValues).reduce((acc: any, [key, value]) => {
-    if (omit?.includes(key as CanvasConfigKey)) return acc;
+  return Object.entries(canvasConfigDefaults).reduce(
+    (acc: any, [key, value]) => {
+      if (omit?.includes(key as CanvasConfigKey)) return acc;
 
-    const argType = {
-      control: { type: 'range', step: 0.01, ...value },
-      ...storyDocs[key as CanvasConfigKey],
-    };
+      let argType = { ...storyDocs[key as CanvasConfigKey] };
 
-    acc[key as CanvasConfigKey] = argType;
+      if (isNumber(value.default)) {
+        argType['control'] = { type: 'range', step: 0.01, ...value };
+      }
 
-    return acc;
-  }, {});
+      if (isBoolean(value.default)) {
+        argType['control'] = { type: 'boolean', default: value.default };
+      }
+
+      acc[key as CanvasConfigKey] = argType;
+
+      return acc;
+    },
+    {},
+  );
 }
