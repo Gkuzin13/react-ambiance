@@ -39,7 +39,7 @@ export const canvasConfigDefaults: CanvasConfigDefaults = Object.freeze({
   },
   borderRadius: {
     min: 0,
-    max: 24,
+    max: 500,
     default: 16,
   },
   frameRate: {
