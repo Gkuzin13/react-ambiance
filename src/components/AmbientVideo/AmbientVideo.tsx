@@ -19,8 +19,6 @@ const AmbientVideo = ({ children, ...restProps }: AmbientVideoProps) => {
     ref: sourceRef,
   };
 
-  console.log(restProps);
-
   return (
     <CanvasContainer>
       {traverseAndPassPropsByElementType(children, 'video', {
