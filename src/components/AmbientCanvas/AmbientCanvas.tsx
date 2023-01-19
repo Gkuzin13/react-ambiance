@@ -11,7 +11,7 @@ export type AmbientCanvasProps = {
   sourceRef: SourceRef;
 } & CanvasConfig;
 
-function AmbientCanvas({ sourceRef, ...config }: AmbientCanvasProps) {
+const AmbientCanvas = ({ sourceRef, ...config }: AmbientCanvasProps) => {
   const { rect, observe, unobserve } = useElementRect(sourceRef.current);
 
   const canvasRef = useRef<HTMLCanvasElement>(null);
@@ -101,6 +101,6 @@ function AmbientCanvas({ sourceRef, ...config }: AmbientCanvasProps) {
       scale={config.scale}
     />
   );
-}
+};
 
 export default AmbientCanvas;
