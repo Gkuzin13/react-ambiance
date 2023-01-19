@@ -2,11 +2,11 @@ import { useState } from 'react';
 import CanvasContainer from '@/components/AmbientContainer/AmbientContainer';
 import AmbientCanvas from '@/components/AmbientCanvas/AmbientCanvas';
 import useSource from '@/hooks/useSource/useSource';
-import { traverseAndPassPropsByElementType } from '@/utils/traverse-dom/traverse-dom';
+import { traverseAndPassPropsByElementType } from '@/utils/traverse/traverse-elements';
 import { canvasDefaultConfigGenerator } from '@/constants/canvas';
 import type { CanvasConfig } from '@/constants/canvas';
 import type { PropsWithChildren } from 'react';
-import type { MediaProps } from '@/utils/traverse-dom/traverse-dom';
+import type { MediaProps } from '@/utils/traverse/traverse-elements';
 
 export type AmbientVideoProps = PropsWithChildren &
   Omit<CanvasConfig, 'appear'>;

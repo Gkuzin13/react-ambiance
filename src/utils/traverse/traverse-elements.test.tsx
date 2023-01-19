@@ -1,8 +1,8 @@
 import { test, vi } from 'vitest';
-import { traverseAndPassPropsByElementType } from './traverse-dom';
-import type { PropsWithChildren } from 'react';
+import { traverseAndPassPropsByElementType } from './traverse-elements';
 import { renderHook } from '@testing-library/react';
 import useSource from '@/hooks/useSource/useSource';
+import type { PropsWithChildren } from 'react';
 
 test('passes props to element', () => {
   const { result } = renderHook(() => useSource());
