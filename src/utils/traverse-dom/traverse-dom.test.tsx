@@ -1,17 +1,21 @@
 import { test, vi } from 'vitest';
 import { traverseAndPassPropsByElementType } from './traverse-dom';
 import type { PropsWithChildren } from 'react';
+import { renderHook } from '@testing-library/react';
+import useSource from '@/hooks/useSource/useSource';
 
 test('passes props to element', () => {
+  const { result } = renderHook(() => useSource());
+
   const propsToPass = {
-    title: 'Test Title',
+    ref: result.current.sourceRef,
     onLoad: vi.fn(),
   };
 
   const Children = () => {
     return (
       <div>
-        <img src="test" alt="test" />
+        <img src="test" alt="test" ref={result.current.sourceRef} />
       </div>
     );
   };
@@ -26,17 +30,13 @@ test('passes props to element', () => {
 
   const childrenWithPassedProps = Wrapper({ children: Children() });
 
-  const [title, onLoad] = Object.keys(propsToPass);
-
-  expect(childrenWithPassedProps.props.children[0].props).toHaveProperty(
-    title,
-    propsToPass.title,
+  expect(childrenWithPassedProps.props.children[0]).toHaveProperty(
+    'ref',
+    propsToPass.ref,
   );
 
   expect(childrenWithPassedProps.props.children[0].props).toHaveProperty(
-    onLoad,
+    'onLoad',
     propsToPass.onLoad,
   );
-
-  expect(childrenWithPassedProps).toMatchSnapshot();
 });

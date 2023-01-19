@@ -21,5 +21,4 @@ test('renders canvas', () => {
   }
 
   expect(screen.getByTestId('canvas-test')).toBeInTheDocument();
-  screen.debug();
 });
