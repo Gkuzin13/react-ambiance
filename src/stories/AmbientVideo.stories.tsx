@@ -27,8 +27,8 @@ export const Default: ComponentStory<typeof AmbientVideo> = (args) => (
     <video
       muted
       controls
-      height={200}
-      width={400}
+      height={320}
+      width={480}
       loop
       autoPlay
       src="http://commondatastorage.googleapis.com/gtv-videos-bucket/sample/BigBuckBunny.mp4"
