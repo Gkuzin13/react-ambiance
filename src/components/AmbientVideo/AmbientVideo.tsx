@@ -4,7 +4,11 @@ import AmbientCanvas from '@/components/AmbientCanvas/AmbientCanvas';
 import useSource from '@/hooks/useSource/useSource';
 import { traverseAndPassPropsByElementType } from '@/utils/traverse-dom/traverse-dom';
 import { canvasDefaultConfigGenerator } from '@/constants/canvas';
-import type { AmbientVideoProps } from './types';
+import type { CanvasConfig } from '@/constants/canvas';
+import type { PropsWithChildren } from 'react';
+
+export type AmbientVideoProps = PropsWithChildren &
+  Omit<CanvasConfig, 'appear'>;
 
 const AmbientVideo = ({ children, ...restProps }: AmbientVideoProps) => {
   const [playing, setPlaying] = useState(false);

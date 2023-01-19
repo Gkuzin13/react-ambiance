@@ -18,7 +18,7 @@ export type CanvasConfigDefaultValue = {
 };
 
 export type CanvasConfigDefaults = {
-  [K in CanvasConfigKey]?: CanvasConfigDefaultValue;
+  [K in CanvasConfigKey]: CanvasConfigDefaultValue;
 };
 
 export const canvasConfigDefaults: CanvasConfigDefaults = Object.freeze({

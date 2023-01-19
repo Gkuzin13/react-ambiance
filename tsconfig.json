@@ -2,6 +2,8 @@
   "compilerOptions": {
     "target": "ESNext",
     "useDefineForClassFields": true,
+    "outDir": "dist",
+    "declaration": true,
     "lib": ["DOM", "DOM.Iterable", "ESNext"],
     "allowJs": false,
     "skipLibCheck": true,
@@ -12,13 +14,14 @@
     "module": "ESNext",
     "moduleResolution": "Node",
     "resolveJsonModule": true,
-    "isolatedModules": true,
-    "noEmit": true,
     "jsx": "react-jsx",
+    "isolatedModules": true,
     "baseUrl": "./",
+    "emitDeclarationOnly": true,
+    "declarationDir": "dist/types",
     "paths": {
-      "@/*": ["./src/*"]
+      "@/*": ["src/*"]
     }
   },
-  "references": [{ "path": "./tsconfig.node.json" }]
+  "include": ["vite.config.*", "src/**/*", "src/**/*.tsx"]
 }

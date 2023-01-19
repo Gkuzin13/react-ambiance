@@ -1,4 +1,3 @@
-import { canvasDefaultConfigGenerator } from '@/constants/canvas';
 import { render, renderHook, screen } from '@testing-library/react';
 import { act } from 'react-dom/test-utils';
 import useSource from '@/hooks/useSource/useSource';
@@ -18,12 +17,7 @@ test('renders canvas', () => {
   });
 
   if (result.current.sourceReady) {
-    render(
-      <AmbientCanvas
-        sourceRef={result.current.sourceRef}
-        config={canvasDefaultConfigGenerator()}
-      />,
-    );
+    render(<AmbientCanvas sourceRef={result.current.sourceRef} />);
   }
 
   expect(screen.getByTestId('canvas-test')).toBeInTheDocument();

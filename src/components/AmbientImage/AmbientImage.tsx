@@ -3,7 +3,11 @@ import AmbientContainer from '@/components/AmbientContainer/AmbientContainer';
 import AmbientCanvas from '@/components/AmbientCanvas/AmbientCanvas';
 import useSource from '@/hooks/useSource/useSource';
 import { canvasDefaultConfigGenerator } from '@/constants/canvas';
-import type { AmbientImageProps } from './types';
+import type { PropsWithChildren } from 'react';
+import type { CanvasConfig } from '@/constants/canvas';
+
+export type AmbientImageProps = PropsWithChildren &
+  Omit<CanvasConfig, 'frameRate' | 'initialFrameAlpha'>;
 
 const AmbientImage = ({ children, ...restProps }: AmbientImageProps) => {
   const { sourceRef, sourceReady, setSourceReady } = useSource();
