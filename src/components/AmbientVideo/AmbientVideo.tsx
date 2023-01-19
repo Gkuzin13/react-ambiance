@@ -6,6 +6,7 @@ import { traverseAndPassPropsByElementType } from '@/utils/traverse-dom/traverse
 import { canvasDefaultConfigGenerator } from '@/constants/canvas';
 import type { CanvasConfig } from '@/constants/canvas';
 import type { PropsWithChildren } from 'react';
+import type { MediaProps } from '@/utils/traverse-dom/traverse-dom';
 
 export type AmbientVideoProps = PropsWithChildren &
   Omit<CanvasConfig, 'appear'>;
@@ -15,10 +16,9 @@ const AmbientVideo = ({ children, ...restProps }: AmbientVideoProps) => {
 
   const { sourceRef, sourceReady, setSourceReady } = useSource();
 
-  const videoElementProps = {
-    onPlaying: () => {
-      setPlaying(true), setSourceReady(true);
-    },
+  const videoElementProps: MediaProps = {
+    onLoadedMetadata: () => setSourceReady(true),
+    onPlaying: () => setPlaying(true),
     onPause: () => setPlaying(false),
     ref: sourceRef,
   };

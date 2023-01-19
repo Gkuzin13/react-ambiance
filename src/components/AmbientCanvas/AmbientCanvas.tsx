@@ -5,7 +5,7 @@ import { Canvas } from './styles.css';
 import type { CanvasConfig } from '@/constants/canvas';
 import type { RefObject } from 'react';
 
-export type SourceRef = RefObject<HTMLImageElement | HTMLVideoElement>;
+export type SourceRef = RefObject<HTMLVideoElement | HTMLImageElement>;
 
 export type AmbientCanvasProps = {
   sourceRef: SourceRef;
@@ -14,12 +14,12 @@ export type AmbientCanvasProps = {
 function AmbientCanvas({ sourceRef, ...config }: AmbientCanvasProps) {
   const { rect, observe, unobserve } = useElementRect(sourceRef.current);
 
-  const canvasRef = useRef(null);
+  const canvasRef = useRef<HTMLCanvasElement>(null);
 
   useLayoutEffect(() => {
     function drawCanvasImageFromSource(
       canvasElement: HTMLCanvasElement | null,
-      sourceElement: HTMLImageElement | HTMLVideoElement | null,
+      sourceElement: SourceRef['current'],
       width: number,
       height: number,
       frameRate?: number,
