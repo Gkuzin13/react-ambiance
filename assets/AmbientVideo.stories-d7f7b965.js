@@ -31,9 +31,9 @@ export const Default: ComponentStory<typeof AmbientVideo> = (args) => (
       width={480}
       loop
       autoPlay
-      src="http://commondatastorage.googleapis.com/gtv-videos-bucket/sample/BigBuckBunny.mp4"
+      src="https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/BigBuckBunny.mp4"
     />
   </AmbientVideo>
 );
-`,locationsMap:{default:{startLoc:{col:60,line:25},endLoc:{col:1,line:37},startBody:{col:60,line:25},endBody:{col:1,line:37}}}},docs:{description:{component:"Component that creates an ambiance around an video"}}},argTypes:V(s),args:m(s)},O=o(e=>a(d,{...e,children:a("video",{muted:!0,controls:!0,height:320,width:480,loop:!0,autoPlay:!0,src:"http://commondatastorage.googleapis.com/gtv-videos-bucket/sample/BigBuckBunny.mp4"})}),"Default"),x=["Default"];export{O as Default,x as __namedExportsOrder,B as default};
-//# sourceMappingURL=AmbientVideo.stories-e403f8dd.js.map
+`,locationsMap:{default:{startLoc:{col:60,line:25},endLoc:{col:1,line:37},startBody:{col:60,line:25},endBody:{col:1,line:37}}}},docs:{description:{component:"Component that creates an ambiance around an video"}}},argTypes:V(s),args:m(s)},O=o(e=>a(d,{...e,children:a("video",{muted:!0,controls:!0,height:320,width:480,loop:!0,autoPlay:!0,src:"https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/BigBuckBunny.mp4"})}),"Default"),x=["Default"];export{O as Default,x as __namedExportsOrder,B as default};
+//# sourceMappingURL=AmbientVideo.stories-d7f7b965.js.map
