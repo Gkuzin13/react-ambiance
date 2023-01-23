@@ -31,7 +31,7 @@ export const Default: ComponentStory<typeof AmbientVideo> = (args) => (
       width={480}
       loop
       autoPlay
-      src="http://commondatastorage.googleapis.com/gtv-videos-bucket/sample/BigBuckBunny.mp4"
+      src="https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/BigBuckBunny.mp4"
     />
   </AmbientVideo>
 );
