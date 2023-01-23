@@ -4,6 +4,8 @@ Components that create ambiance from image or video. This was inspired by YouTub
 
 ![React Ambiance](https://github.com/Gkuzin13/react-ambiance/blob/main/assets/screenshot.png)
 
+[Demos and docs](https://gkuzin13.github.io/react-ambiance/?path=/story/ambient-video--default).
+
 ```js
 import { AmbientVideo } from 'react-ambiance';
 
