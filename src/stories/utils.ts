@@ -29,7 +29,7 @@ const storyDocs: StoryDocs = {
   },
   frameRate: {
     description:
-      'Controls the frame rate (may affect performace if set to a low value)',
+      'Controls the frame rate (affects performace if set to a high value)',
   },
   initialFrameAlpha: {
     description:
