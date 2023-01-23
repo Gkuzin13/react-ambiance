@@ -9,11 +9,22 @@ export const parameters = {
     },
   },
   layout: 'centered',
-  parameters: {
-    darkMode: {
-      dark: { ...themes.dark, appBg: 'black' },
-      current: 'dark',
-      stylePreview: true,
-    },
+  backgrounds: {
+    default: 'dark',
+    values: [
+      {
+        name: 'dark',
+        value: '#1a1a1a',
+      },
+      {
+        name: 'light',
+        value: '#F8F8F8',
+      },
+    ],
+  },
+  darkMode: {
+    dark: { ...themes.dark, appBg: '#0d0d0d' },
+    current: 'dark',
+    stylePreview: true,
   },
 };
