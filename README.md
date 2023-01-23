@@ -22,7 +22,7 @@ import { AmbientVideo } from 'react-ambiance';
 
 ### Props
 
-- `scale`:The ambiance scale
+- `scale`: The ambiance scale
 - `blur`: Blur level in px
 - `opacity`: The ambiance opacity
 - `borderRadius`: The Ambiance border radius
