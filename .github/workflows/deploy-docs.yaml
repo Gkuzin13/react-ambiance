@@ -11,4 +11,4 @@ jobs:
       - name: Install and Build
         run: |
           npm install
-          npm run deploy-storybook -- --source-branch=main
+          npm run deploy-storybook -- --ci --source-branch=main
