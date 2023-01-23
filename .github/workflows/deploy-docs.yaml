@@ -12,7 +12,7 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - id: build-publish
-        uses: ./
+        uses: deploy-docs
         with:
           path: storybook-static
           build_command: npm run build-storybook
