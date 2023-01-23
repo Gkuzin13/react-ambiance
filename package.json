@@ -28,7 +28,6 @@
     "preview": "vite preview",
     "test:watch": "vitest",
     "test": "vitest run",
-    "test:coverage": "vitest run --coverage",
     "lint": "eslint . --ext .ts,.tsx",
     "typecheck": "tsc --noEmit",
     "storybook": "start-storybook -p 6006",
