@@ -12,7 +12,7 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - id: build-publish
-        uses: react-ambiance/docs-to-ghp@1.0.0
+        uses: ./
         with:
           path: storybook-static
           build_command: npm run build-storybook
