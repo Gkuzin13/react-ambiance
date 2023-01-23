@@ -17,7 +17,7 @@ jobs:
           npm run build-storybook
 
       - name: Deploy
-        uses: react-ambiance/github-pages-deploy-action@3.6.2
+        uses: gkuzin13/react-ambiance@v1
         with:
           branch: gh-pages
           folder: storybook-static
