@@ -2,7 +2,7 @@
 
 Components that create ambiance from image or video. This was inspired by YouTube's Ambient Mode.
 
-![React Ambiance](https://raw.githubusercontent.com/Gkuzin13/react-ambiance/master/assets/screenshot.png)
+![React Ambiance](https://github.com/Gkuzin13/react-ambiance/blob/main/assets/screenshot.png)
 
 ```js
 import { AmbientVideo } from 'react-ambiance';
