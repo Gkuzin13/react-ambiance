@@ -12,3 +12,5 @@ jobs:
         run: |
           npm install
           npm run deploy-storybook -- --ci --source-branch=main
+        env:
+          GH_TOKEN: ${{ github.actor }}:${{ secrets.GITHUB_TOKEN }}
