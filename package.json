@@ -31,7 +31,7 @@
     "lint": "eslint . --ext .ts,.tsx",
     "typecheck": "tsc --noEmit",
     "storybook": "start-storybook -p 6006",
-    "build-storybook": "build-storybook"
+    "deploy-storybook": "storybook-to-ghpages"
   },
   "dependencies": {
     "react": "^18.2.0",
