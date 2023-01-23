@@ -1,0 +1,1 @@
+{"v":3,"stories":{"ambient-image--default":{"id":"ambient-image--default","title":"Ambient Image","name":"Default","importPath":"./src/stories/AmbientImage.stories.tsx"},"ambient-video--default":{"id":"ambient-video--default","title":"Ambient Video","name":"Default","importPath":"./src/stories/AmbientVideo.stories.tsx"}}}
