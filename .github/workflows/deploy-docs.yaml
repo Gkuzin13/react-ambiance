@@ -12,5 +12,3 @@ jobs:
         run: |
           npm install
           npm run deploy-storybook -- --ci
-        env:
-          GH_TOKEN: ${{ secrets.GH_TOKEN }}
