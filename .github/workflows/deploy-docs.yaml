@@ -1,15 +1,16 @@
-name: Build and Deploy storybook docs
-
+name: Build & Deploy Storybook docs
 on:
   push:
     branches:
-      - 'main'
+      - master
 jobs:
   build-and-deploy:
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v1.1
+      - uses: actions/checkout@v2
       - name: Install and Build
-      run: |
+        run: |
           npm install
           npm run deploy-storybook -- --ci
+        env:
+          GH_TOKEN: ${{ secrets.GH_TOKEN }}
