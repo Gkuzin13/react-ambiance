@@ -13,7 +13,11 @@ module.exports = {
   core: {
     builder: '@storybook/builder-vite',
   },
-  async viteFinal(config, options) {
+  async viteFinal(config, { configType }) {
+    if (configType === 'PRODUCTION') {
+      config.base = './';
+    }
+
     return {
       ...config,
       resolve: {
